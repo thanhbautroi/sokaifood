@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BÁO CÁO ĐỒ ÁN TỐT NGHIỆP - SKYFOOD</title>
+    <!-- Fonts: Inter for precision, Playfair for Elegance -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;800;900&family=Playfair+Display:ital,wght@0,900;1,900&display=swap"
+        rel="stylesheet">
+    <!-- Phosphor Icons: The standard for modern UI -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --primary: #C41230;
+            --primary-light: #FF3D51;
+            --accent: #FFD60A;
+            --bg-black: #000000;
+            --bg-card: #0A0A0B;
+            --text-pure: #FFFFFF;
+            --text-sub: #86868b;
+            --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-long: 1.2s var(--ease-apple);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-pure);
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .stage-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .light-beam {
+            position: absolute;
+            width: 80vw;
+            height: 80vh;
+            background: radial-gradient(circle, rgba(196, 18, 48, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .presentation-wrap {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5% 10%;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: all var(--transition-long);
+            filter: blur(20px) brightness(0);
+            transform: scale(1.1);
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            filter: blur(0) brightness(1);
+            transform: scale(1);
+            z-index: 10;
+        }
+
+        .slide.prev {
+            transform: scale(0.9) translateY(-5vh);
+            filter: blur(20px) brightness(0);
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+            color: var(--text-sub);
+            font-weight: 400;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .section-header {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4em;
+            color: var(--primary-light);
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s var(--ease-apple);
+        }
+
+        .slide.active .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 {
+            transition-delay: 0.2s;
+        }
+
+        .delay-2 {
+            transition-delay: 0.4s;
+        }
+
+        .delay-3 {
+            transition-delay: 0.6s;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 3rem;
+        }
+
+        .card-premium {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: all 0.4s var(--ease-apple);
+        }
+
+        .card-premium i {
+            font-size: 3rem;
+            color: var(--primary-light);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .card-premium h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .card-premium p {
+            color: var(--text-sub);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .diagram-pro {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .node-pro {
+            border: 1px solid var(--text-sub);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-pure);
+        }
+
+        .node-pro.highlight {
+            border-color: var(--primary-light);
+            background: var(--primary);
+            box-shadow: 0 0 30px rgba(196, 18, 48, 0.3);
+        }
+
+        .code-vault {
+            background: #000;
+            border: 1px solid #222;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: left;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+            width: 100%;
+            max-width: 800px;
+            font-family: 'SF Mono', monospace;
+            font-size: 1rem;
+            color: #d1d1d6;
+        }
+
+
+
+        .cta-apple {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 1.2rem 3rem;
+            background: #fff;
+            color: #000;
+            border-radius: 100px;
+            font-weight: 700;
+            text-decoration: none;
+            margin-top: 3rem;
+        }
+
+        .slide-nav {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+        }
+
+        .nav-hotspot {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        .academic-info {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+        }
+
+        .info-col {
+            text-align: left;
+        }
+
+        .info-label {
+            font-size: 0.7rem;
+            color: var(--text-sub);
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="stage-bg">
+        <div class="light-beam"></div>
+    </div>
+
+    <div class="slide-nav">
+        <div class="nav-hotspot" id="navL"></div>
+        <div class="nav-hotspot" id="navR"></div>
+    </div>
+
+    <div class="presentation-wrap" id="wrap">
+
+        <!-- 1: COVER -->
+        <div class="slide active">
+            <div style="text-align: center;">
+                <div class="section-header reveal">Đồ án tốt nghiệp</div>
+                <h1 class="hero-title reveal delay-1">PHÁT TRIỂN HỆ THỐNG<br>THƯƠNG MẠI ĐIỆN TỬ SKYFOOD.</h1>
+                <p class="subtitle reveal delay-2">Tối ưu hóa hành trình mua sắm thực phẩm với hỗ trợ AI.</p>
+                <div class="academic-info reveal delay-3">
+                    <div class="info-col">
+                        <p class="info-label">Giảng viên hướng dẫn</p>
+                        <p class="info-value">Thầy Đàm Văn Luận<br>Cô Trần Thị Yến</p>
+                    </div>
+                    <div class="info-col">
+                        <p class="info-label">Sinh viên thực hiện</p>
+                        <p class="info-value">SkyFood Team<br>Khóa K23 - CNTT</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2: NỘI DUNG BÁO CÁO -->
+        <div class="slide">
+            <div style="width: 100%; max-width: 900px;">
+                <h1 class="hero-title reveal" style="font-size: 3.5rem; text-align: left;">Nội dung chính.</h1>
+                <div class="grid-layout reveal delay-1"
+                    style="grid-template-columns: 1fr; gap: 1rem; margin-top: 2rem;">
+                    <p style="font-size: 1.2rem; color: #fff;">1. Lý do chọn đề tài & Mục tiêu hệ thống.</p>
+                    <p style="border-top:1px solid #222; padding-top:10px; font-size: 1.2rem; color: #fff;">2. Công nghệ
+                        phát triển & Kiến trúc phần mềm.</p>
+                    <p style="border-top:1px solid #222; padding-top:10px; font-size: 1.2rem; color: #fff;">3. Mô hình
+                        hóa dữ liệu (Database Schema).</p>
+                    <p style="border-top:1px solid #222; padding-top:10px; font-size: 1.2rem; color: #fff;">4. Giải pháp
+                        AI Chatbot & Nguyên lý hoạt động.</p>
+                    <p style="border-top:1px solid #222; padding-top:10px; font-size: 1.2rem; color: #fff;">5. Các chức
+                        năng chính phía Client & Admin.</p>
+                    <p style="border-top:1px solid #222; padding-top:10px; font-size: 1.2rem; color: #fff;">6. Kết quả,
+                        Hạn chế & Hướng phát triển.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3: LÝ DO CHỌN ĐỀ TÀI -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <div class="section-header reveal">Chapter I</div>
+                <h1 class="hero-title reveal delay-1">Thực trạng thị trường.</h1>
+                <p class="subtitle reveal delay-2">Thương mại điện tử thực phẩm đang bùng nổ, nhưng thiếu sự tư vấn cá
+                    nhân hóa, dẫn đến tỉ lệ khách hàng bỏ dở giỏ hàng khi không tìm được khẩu vị ưng ý.</p>
+            </div>
+        </div>
+
+        <!-- 4: MỤC TIÊU HỆ THỐNG -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal">Mục tiêu đề tài.</h1>
+                <div class="grid-layout">
+                    <div class="card-premium reveal delay-1">
+                        <h3>Tự động hóa</h3>
+                        <p>Số hóa quy trình bán hàng và quản trị đơn từ kho bãi.</p>
+                    </div>
+                    <div class="card-premium reveal delay-2">
+                        <h3>Trải nghiệm AI</h3>
+                        <p>Xây dựng Chatbot tư vấn thông minh dựa trên hành vi người dùng.</p>
+                    </div>
+                    <div class="card-premium reveal delay-3">
+                        <h3>Hiệu năng cao</h3>
+                        <p>Tối ưu hóa tốc độ tải trang & bảo mật dữ liệu người dùng.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5: PHẠM VI THỰC HIỆN -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal">Phạm vi dự án.</h1>
+                <p class="subtitle reveal delay-1">Xây dựng ứng dụng Web hoàn chỉnh phục vụ cả hai đối tượng: <br>Khách
+                    hàng mua sắm & Quản trị viên điều hành.</p>
+            </div>
+        </div>
+
+        <!-- 6: CÔNG NGHỆ (TECH STACK) -->
+        <div class="slide">
+            <div>
+                <div class="section-header reveal">Chapter II</div>
+                <h1 class="hero-title reveal delay-1" style="font-size: 5rem;">Stack công nghệ.</h1>
+                <div class="grid-layout">
+                    <div class="card-premium reveal delay-1">
+                        <h3>Next.js 14</h3>
+                        <p>Sử dụng App Router, Server Components tối ưu SEO.</p>
+                    </div>
+                    <div class="card-premium reveal delay-2">
+                        <h3>MongoDB</h3>
+                        <p>Lưu trữ dữ liệu NoSQL linh hoạt với kiến trúc Atlas.</p>
+                    </div>
+                    <div class="card-premium reveal delay-3">
+                        <h3>Zustand</h3>
+                        <p>Quản lý trạng thái giỏ hàng hiệu quả phía Client.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7: KIẾN TRÚC TỔNG QUÁT -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal">Kiến trúc phần mềm.</h1>
+                <div class="diagram-pro reveal delay-1">
+                    <div class="node-pro">Client UI</div>
+                    <div class="arrow-pro">⇄</div>
+                    <div class="node-pro highlight">Next.js API Routes</div>
+                    <div class="arrow-pro">⇄</div>
+                    <div class="node-pro">MongoDB Engine</div>
+                </div>
+                <p class="subtitle reveal delay-2" style="margin-top: 3rem;">Hệ thống monolithic-modern giúp giảm độ trễ
+                    và dễ dàng triển khai.</p>
+            </div>
+        </div>
+
+        <!-- 8: DATABASE SCHEMA (OVERVIEW) -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <div class="section-header reveal">Chapter III</div>
+                <h1 class="hero-title reveal delay-1">Cơ sở dữ liệu.</h1>
+                <p class="subtitle reveal delay-2">Sử dụng mô hình Document-based để tối đa hóa tính linh hoạt của cấu
+                    trúc sản phẩm đồ ăn vặt.</p>
+            </div>
+        </div>
+
+        <!-- 9: PRODUCT SCHEMA DETAIL -->
+        <div class="slide">
+            <div style="width: 100%; max-width: 800px;">
+                <h1 class="hero-title reveal" style="font-size: 3rem; text-align: left;">Chi tiết Product Schema.</h1>
+                <div class="code-vault reveal delay-1">
+                    <code style="color: #63b3ed;">
+                        const ProductSchema = new Schema({<br>
+                        &nbsp;&nbsp;name: { type: String, required: true },<br>
+                        &nbsp;&nbsp;price: { type: Number, required: true },<br>
+                        &nbsp;&nbsp;collectionType: { type: String },<br>
+                        &nbsp;&nbsp;images: [{ type: String }],<br>
+                        &nbsp;&nbsp;inStock: { type: Boolean, default: true }<br>
+                        });
+                    </code>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10: ORDER SCHEMA DETAIL -->
+        <div class="slide">
+            <div style="width: 100%; max-width: 800px;">
+                <h1 class="hero-title reveal" style="font-size: 3rem; text-align: left;">Chi tiết Order Schema.</h1>
+                <div class="code-vault reveal delay-1">
+                    <code style="color: #f694ff;">
+                        const OrderSchema = new Schema({<br>
+                        &nbsp;&nbsp;items: [{ productId: ObjectId, quantity: Number }],<br>
+                        &nbsp;&nbsp;guestInfo: { name, email, phone, address },<br>
+                        &nbsp;&nbsp;totalAmount: Number,<br>
+                        &nbsp;&nbsp;status: { type: String, default: 'pending' },<br>
+                        &nbsp;&nbsp;paymentMethod: { type: String, default: 'cod' }<br>
+                        });
+                    </code>
+                </div>
+            </div>
+        </div>
+
+        <!-- 11: FLOW CHART (MUA HÀNG) -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal">Quy trình nghiệp vụ.</h1>
+                <div class="diagram-pro reveal delay-1">
+                    <div class="node-pro">Duyệt hàng</div>
+                    <div class="arrow-pro">→</div>
+                    <div class="node-pro">Zustand Cart</div>
+                    <div class="arrow-pro">→</div>
+                    <div class="node-pro highlight">Checkout (COD)</div>
+                    <div class="arrow-pro">→</div>
+                    <div class="node-pro">Admin Approval</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 12: CHAPTER IV: AI CHATBOT -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <div class="section-header reveal">Chapter IV</div>
+                <h1 class="hero-title reveal delay-1">SkyBot: Giải pháp AI.</h1>
+                <p class="subtitle reveal delay-2">Chức năng cốt lõi tạo nên sự khác biệt của SkyFood trong tư vấn và đề
+                    xuất sản phẩm.</p>
+            </div>
+        </div>
+
+        <!-- 13: CƠ CHẾ CHATBOT (INTENT) -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal">Phân tích Ý định.</h1>
+                <p class="subtitle reveal delay-1">Thay vì dùng AI đắt đỏ, chúng tôi xây dựng bộ máy phân tách Token
+                    <br>để xác định "Cơn thèm" của khách hàng một cách chính xác và tiết kiệm.
+                </p>
+            </div>
+        </div>
+
+        <!-- 14: CHATBOT FLOW DIAGRAM -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal">Luồng dữ liệu SkyBot.</h1>
+                <div class="diagram-pro reveal delay-1" style="flex-wrap: wrap; justify-content: center;">
+                    <div class="node-pro">User Chat</div>
+                    <div class="arrow-pro">→</div>
+                    <div class="node-pro highlight">Keyword Engine</div>
+                    <div class="arrow-pro">→</div>
+                    <div class="node-pro highlight">Atlas Search</div>
+                    <div class="arrow-pro">→</div>
+                    <div class="node-pro">Product Recommender</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 15: CHATBOT IMPLEMENTATION (CODE) -->
+        <div class="slide">
+            <div style="width: 100%; max-width: 800px;">
+                <h1 class="hero-title reveal" style="font-size: 3rem; text-align: left;">Mã nguồn xử lý Chat.</h1>
+                <div class="code-vault reveal delay-1">
+                    <code>
+                        const results = await Product.find({<br>
+                        &nbsp;&nbsp;category: { $in: intentKeywords },<br>
+                        &nbsp;&nbsp;inStock: true<br>
+                        }).limit(4);<br>
+                        <span style="color: #888;">// Trả về JSON chứa tin nhắn gợi ý và mảng sản phẩm</span>
+                    </code>
+                </div>
+            </div>
+        </div>
+
+        <!-- 16: GIÁ TRỊ CỦA CHATBOT -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal">Kết quả tư vấn AI.</h1>
+                <p class="subtitle reveal delay-1">Giảm thiểu thời gian chọn hàng của khách từ 5 phút xuống còn 30 giây
+                    <br>thông qua việc đề xuất chính xác khẩu vị (Cay, Chua, Giòn, Dai).
+                </p>
+            </div>
+        </div>
+
+        <!-- 17: CHỨC NĂNG CLIENT (CART) -->
+        <div class="slide">
+            <div>
+                <div class="section-header reveal">Chapter V</div>
+                <h1 class="hero-title reveal delay-1" style="font-size: 5rem;">Quản lý giỏ hàng.</h1>
+                <div class="card-premium reveal delay-2">
+                    <h3>Zustand Persistence</h3>
+                    <p>Giỏ hàng được lưu trữ tại bộ nhớ cục bộ, trạng thái đồng bộ mượt mà giữa các trang mà không cần
+                        gọi Server liên tục.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 18: THANH TOÁN (COD) -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal">Chiến lược Thanh toán.</h1>
+                <div class="node-pro highlight reveal delay-1" style="font-size: 2rem; border-radius: 20px;">C.O.D (Cash
+                    On Delivery)</div>
+                <p class="subtitle reveal delay-2" style="margin-top: 2rem;">Chọn COD để đảm bảo tính thực tiễn cao nhất
+                    trong giai đoạn thử nghiệm <br>và bảo vệ quyền lợi người mua hàng đồ ăn vặt.</p>
+            </div>
+        </div>
+
+        <!-- 19: ADMIN DASHBOARD (ANALYTICS) -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal">Hệ thống Quản trị.</h1>
+                <p class="subtitle reveal delay-1">Theo dõi doanh thu, số lượng đơn hàng mới và phản hồi khách hàng
+                    <br>ngay trên Dashboard trung tâm.
+                </p>
+            </div>
+        </div>
+
+        <!-- 20: QUẢN LÝ KHO (INVENTORY) -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal">Kho hàng & Media.</h1>
+                <p class="subtitle reveal delay-1">Tích hợp API Cloud (ImgBB) để tự động hóa khâu đăng tải hình ảnh sản
+                    phẩm, <br>giúp Admin vận hành gian hàng mà không cần kiến thức kỹ thuật.</p>
+            </div>
+        </div>
+
+        <!-- 21: BẢO MẬT: NEXTAUTH -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <div class="section-header reveal">Security</div>
+                <h1 class="hero-title reveal delay-1">An ninh hệ thống.</h1>
+                <div class="grid-layout">
+                    <div class="card-premium reveal delay-1">
+                        <h3>Auth Middleware</h3>
+                        <p>Chặn truy cập trái phép vào Dashboard Admin.</p>
+                    </div>
+                    <div class="card-premium reveal delay-2">
+                        <h3>Bcrypt Lớp 10</h3>
+                        <p>Mã hóa mật khẩu người dùng trước khi lưu xuống DB.</p>
+                    </div>
+                    <div class="card-premium reveal delay-3">
+                        <h3>JWT Session</h3>
+                        <p>Xác thực phiên làm việc an toàn, chống giả mạo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 22: TỐI ƯU HIỆU NĂNG -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal">Tối ưu hóa phản hồi.</h1>
+                <p class="subtitle reveal delay-1">Tận dụng **Server-side Rendering (SSR)** để thời gian hiển thị đầu
+                    tiên (FCP) <br>đạt mức cực thấp, tăng trải nghiệm người dùng di động.</p>
+            </div>
+        </div>
+
+        <!-- 23: KIỂM THỬ HỆ THỐNG -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal">Kiểm thử (Testing).</h1>
+                <p class="subtitle reveal delay-1">Thực hiện Manual Test trên nhiều trình duyệt và tích hợp đơn vị (Unit
+                    Test) <br>cho các API xử lý thanh toán và Chatbot.</p>
+            </div>
+        </div>
+
+        <!-- 24: KẾT QUẢ ĐẠT ĐƯỢC -->
+        <div class="slide">
+            <div>
+                <div class="section-header reveal">Results</div>
+                <h1 class="hero-title reveal delay-1" style="font-size: 5rem;">Nghiệm thu Đồ án.</h1>
+                <div class="grid-layout">
+                    <div class="card-premium reveal delay-1">
+                        <h3>100% Core</h3>
+                        <p>Hoàn thiện quy trình mua sắm từ A-Z.</p>
+                    </div>
+                    <div class="card-premium reveal delay-2">
+                        <h3>AI Tư vấn</h3>
+                        <p>Chatbot hoạt động chính xác theo từ khóa.</p>
+                    </div>
+                    <div class="card-premium reveal delay-3">
+                        <h3>Bảo mật</h3>
+                        <p>CMS bảo vệ tuyệt đối dữ liệu nội bộ.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 25: HẠN CHẾ CÒN TỒN TẠI -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal" style="color: var(--text-sub);">Hạn chế.</h1>
+                <p class="subtitle reveal delay-1">Hệ thống chưa tích hợp Voice-Chat cho Bot <br>và chưa hỗ trợ thanh
+                    toán qua cổng trung gian (VNPay).</p>
+            </div>
+        </div>
+
+        <!-- 26: HƯỚNG PHÁT TRIỂN TIẾP THEO -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal">Kế hoạch tương lai.</h1>
+                <div class="diagram-pro reveal delay-1">
+                    <div class="node-pro">QR Payment</div>
+                    <div class="arrow-pro">→</div>
+                    <div class="node-pro highlight">AI Voice Assistant</div>
+                    <div class="arrow-pro">→</div>
+                    <div class="node-pro">Mobile App</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 27: KẾT LUẬN CHUNG -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal">Kết luận.</h1>
+                <p class="subtitle reveal delay-1">SkyFood không chỉ giải quyết bài toán mua sắm Snack đơn thuần, <br>mà
+                    là minh chứng cho việc ứng dụng công nghệ hiện đại hóa trải nghiệm khách hàng.</p>
+            </div>
+        </div>
+
+        <!-- 28: LỜI CẢM ƠN -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal">Lời cảm ơn.</h1>
+                <p class="subtitle reveal delay-1">Xin cảm ơn các Thầy Cô trong Hội đồng đã dành thời gian theo dõi bài
+                    thuyết trình này.</p>
+            </div>
+        </div>
+
+        <!-- 29: DEMO HỆ THỐNG -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal">Live Demo.</h1>
+                <p class="subtitle reveal delay-1">Trình diễn quy trình từ đặt hàng đến quản trị admin.</p>
+                <div class="reveal delay-2">
+                    <a href="http://localhost:3000" target="_blank" class="cta-apple">BẮT ĐẦU DEMO</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 30: Q&A -->
+        <div class="slide">
+            <div style="text-align: center;">
+                <h1 class="hero-title reveal" style="font-size: 7rem;">Q & A.</h1>
+                <p class="subtitle reveal delay-1" style="color: var(--primary-light);">Rất mong nhận được câu hỏi và
+                    đóng góp từ Quý Hội đồng.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let cur = 0;
+        const slides = document.querySelectorAll('.slide');
+        const count = slides.length;
+
+        function update() {
+            slides.forEach((s, i) => {
+                s.classList.remove('active', 'prev');
+                if (i === cur) s.classList.add('active');
+                if (i < cur) s.classList.add('prev');
+            });
+        }
+
+        function next() { if (cur < count - 1) { cur++; update(); } }
+        function prev() { if (cur > 0) { cur--; update(); } }
+
+        document.getElementById('navR').addEventListener('click', next);
+        document.getElementById('navL').addEventListener('click', prev);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') next();
+            if (e.key === 'ArrowLeft') prev();
+        });
+
+        let wait = false;
+        window.addEventListener('wheel', (e) => {
+            if (wait) return;
+            if (Math.abs(e.deltaY) < 40) return;
+            if (e.deltaY > 0) next(); else prev();
+            wait = true;
+            setTimeout(() => wait = false, 1200);
+        });
+
+        update();
+    </script>
+</body>
+
+</html>
