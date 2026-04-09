@@ -3,7 +3,11 @@ import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://trthanhdo41_db_user:trthanhdo41@manh-thanh.sslgybf.mongodb.net/snack-store?appName=manh-thanh';
+const MONGODB_URI = process.env.MONGODB_URI;
+
+if (!MONGODB_URI) {
+    throw new Error('Please define the MONGODB_URI environment variable in .env.local');
+}
 
 async function seedAdmin() {
     try {
