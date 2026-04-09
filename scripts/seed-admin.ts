@@ -9,10 +9,12 @@ if (!MONGODB_URI) {
     throw new Error('Please define the MONGODB_URI environment variable in .env.local');
 }
 
+const MONGODB_URI_STRING = MONGODB_URI;
+
 async function seedAdmin() {
     try {
         console.log('🔌 Connecting to MongoDB...');
-        await mongoose.connect(MONGODB_URI);
+        await mongoose.connect(MONGODB_URI_STRING);
         console.log('✅ Connected');
 
         const db = mongoose.connection.db!;
