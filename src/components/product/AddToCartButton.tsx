@@ -83,8 +83,26 @@ export default function AddToCartButton({ product }: { product: Product }) {
         router.push("/login");
     };
 
+    const validateGuestForm = () => {
+        const name = guestForm.name.trim();
+        const phone = guestForm.phone.trim();
+        const address = guestForm.address.trim();
+
+        if (name.length < 2) return "Tên phải có ít nhất 2 ký tự.";
+        if (!/^(0|\+84)\d{8,9}$/.test(phone.replace(/\s/g, ""))) return "Số điện thoại không hợp lệ.";
+        if (address.length < 10) return "Địa chỉ cần chi tiết hơn (ít nhất 10 ký tự).";
+        return null;
+    };
+
     const handleGuestOrder = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        const validationError = validateGuestForm();
+        if (validationError) {
+            alert(validationError);
+            return;
+        }
+
         setIsSubmitting(true);
         try {
             const res = await fetch("/api/orders", {
@@ -96,24 +114,25 @@ export default function AddToCartButton({ product }: { product: Product }) {
                         name: product.name,
                         price: product.price,
                         quantity: 1,
-                        image: product.images?.[0] || "",
+                        image: product.images?.[0] || "/logo.png",
                     }],
                     totalAmount: product.price,
                     guestInfo: {
-                        name: guestForm.name,
-                        phone: guestForm.phone,
-                        address: guestForm.address,
+                        name: guestForm.name.trim(),
+                        phone: guestForm.phone.trim(),
+                        address: guestForm.address.trim(),
                         email: "",
                         notes: `Đặt nhanh từ trang sản phẩm: ${product.name}`,
-                        paymentMethod: "cod",
                     },
                     paymentMethod: "cod",
                 }),
             });
+
             if (res.ok) {
                 setGuestSuccess(true);
             } else {
-                alert("Có lỗi khi tạo đơn hàng, vui lòng thử lại.");
+                const errorData = await res.json().catch(() => null);
+                alert(errorData?.message || "Có lỗi khi tạo đơn hàng, vui lòng thử lại.");
             }
         } catch {
             alert("Lỗi hệ thống, thử lại sau nhé!");

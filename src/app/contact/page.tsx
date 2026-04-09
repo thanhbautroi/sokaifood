@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Mail, Phone, MapPin, Send, CheckCircle2, MessageCircle } from "lucide-react";
 
 export default function ContactPage() {
@@ -54,12 +55,9 @@ export default function ContactPage() {
                     {/* Contact Info */}
                     <div className="lg:col-span-2 space-y-4">
                         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                            <div className="w-24 h-24 flex items-center justify-center rounded-full bg-red-600 mb-6">
-                                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-14 h-14">
-                                    <path d="M8 26c0-5 3-9 8-10.5C17 10 21 7 26 8c5 1 8 5.5 7 10.5 2 .5 4 2.5 4 5.5 0 3-2.5 5-5.5 5H11c-3 0-5-2-5-5 0-2.5 1.5-4.5 3-5z" fill="white" opacity="0.9" />
-                                    <path d="M20 19l1.5-4 1.5 4 4-1.5-2.5 3 2.5 3-4-1.5-1.5 4-1.5-4-4 1.5 2.5-3-2.5-3z" fill="#C41230" />
-                                </svg>
-                            </div>
+                            <div className="relative w-24 h-24 flex items-center justify-center rounded-full bg-blue-100 overflow-hidden mb-6">
+                            <Image src="/logo.png" alt="SkyFood Logo" fill className="object-contain" />
+                        </div>
                             <p className="text-gray-500 text-sm leading-relaxed mb-6">
                                 SkyFood — thiên đường đồ ăn vặt lớn nhất. Chúng tôi cam kết an toàn vệ sinh thực phẩm và giao hàng siêu tốc.
                             </p>
@@ -67,7 +65,7 @@ export default function ContactPage() {
                                 {[
                                     { icon: Phone, label: "Hotline", value: "0909 123 456", href: "tel:0909123456" },
                                     { icon: Mail, label: "Email", value: "support@skyfood.vn", href: "mailto:support@skyfood.vn" },
-                                    { icon: MapPin, label: "Địa chỉ", value: "TP. Hồ Chí Minh, Việt Nam", href: null },
+                                    { icon: MapPin, label: "Địa chỉ", value: "Hà Nội, Việt Nam", href: null },
                                 ].map(({ icon: Icon, label, value, href }) => (
                                     <div key={label} className="flex items-start gap-3">
                                         <div className="w-9 h-9 bg-red-50 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5">

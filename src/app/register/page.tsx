@@ -2,14 +2,17 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
-import { Lock, Mail, User } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, User } from "lucide-react";
 
 export default function RegisterPage() {
     const router = useRouter();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
@@ -17,6 +20,12 @@ export default function RegisterPage() {
         e.preventDefault();
         setIsLoading(true);
         setError("");
+
+        if (password !== confirmPassword) {
+            setError("Mật khẩu xác nhận không khớp.");
+            setIsLoading(false);
+            return;
+        }
 
         try {
             const res = await fetch("/api/auth/register", {
@@ -43,11 +52,13 @@ export default function RegisterPage() {
         <div className="min-h-screen bg-red-50/50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 pt-24">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="flex justify-center">
-                    <div className="w-20 h-20 flex items-center justify-center rounded-full bg-red-600">
-                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12">
-                            <path d="M8 26c0-5 3-9 8-10.5C17 10 21 7 26 8c5 1 8 5.5 7 10.5 2 .5 4 2.5 4 5.5 0 3-2.5 5-5.5 5H11c-3 0-5-2-5-5 0-2.5 1.5-4.5 3-5z" fill="white" opacity="0.9" />
-                            <path d="M20 19l1.5-4 1.5 4 4-1.5-2.5 3 2.5 3-4-1.5-1.5 4-1.5-4-4 1.5 2.5-3-2.5-3z" fill="#C41230" />
-                        </svg>
+                    <div className="relative w-20 h-20 flex items-center justify-center rounded-full bg-blue-100 overflow-hidden">
+                        <Image
+                            src="/logo.png"
+                            alt="SkyFood Logo"
+                            fill
+                            className="object-contain"
+                        />
                     </div>
                 </div>
                 <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
@@ -111,14 +122,42 @@ export default function RegisterPage() {
                                     <Lock className="h-5 w-5 text-gray-400" />
                                 </div>
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="block w-full pl-10 px-3 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
+                                    className="block w-full pl-10 pr-10 px-3 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
                                     placeholder="Tạo mật khẩu bí mật 🔐 (ít nhất 6 ký tự)"
                                     minLength={6}
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword((prev) => !prev)}
+                                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500"
+                                    aria-label={showPassword ? "Ẩn mật khẩu" : "Hiển thị mật khẩu"}
+                                >
+                                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Xác nhận mật khẩu</label>
+                            <div className="mt-1 relative">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <Lock className="h-5 w-5 text-gray-400" />
+                                </div>
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    required
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    className="block w-full pl-10 pr-10 px-3 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
+                                    placeholder="Nhập lại mật khẩu"
+                                />
+                                <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
+                                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                </div>
                             </div>
                         </div>
 

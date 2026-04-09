@@ -9,26 +9,48 @@ export async function POST(req: Request) {
         const session = await getServerSession(authOptions);
         const body = await req.json();
 
-        if (!body.items || body.items.length === 0) {
-            return NextResponse.json({ message: "Giỏ hàng rỗng" }, { status: 400 });
+        if (!body.items || !Array.isArray(body.items) || body.items.length === 0) {
+            return NextResponse.json({ message: "Giỏ hàng rỗng." }, { status: 400 });
+        }
+
+        if (typeof body.totalAmount !== "number" || body.totalAmount < 0) {
+            return NextResponse.json({ message: "Tổng tiền đơn hàng không hợp lệ." }, { status: 400 });
+        }
+
+        if (!body.guestInfo || !body.guestInfo.name || !body.guestInfo.phone || !body.guestInfo.address) {
+            return NextResponse.json({ message: "Vui lòng cung cấp tên, số điện thoại và địa chỉ giao hàng." }, { status: 400 });
         }
 
         if (mongoose.connection.readyState === 0) {
             await mongoose.connect(process.env.MONGODB_URI!);
         }
 
-        const newOrder = await Order.create({
-            userId: session?.user ? (session.user as any).id : null,
-            items: body.items.map((item: any) => ({
-                productId: item._id,
+        const mappedItems = body.items.map((item: any) => {
+            const productId = item.productId || item._id;
+            return {
+                productId,
                 name: item.name,
                 price: item.price,
                 quantity: item.quantity,
-                image: item.image,
-            })),
-            guestInfo: body.guestInfo,
+                image: item.image || "/logo.png",
+            };
+        });
+
+        if (mappedItems.some((item: any) => !item.productId)) {
+            return NextResponse.json({ message: "Mã sản phẩm không hợp lệ trong giỏ hàng." }, { status: 400 });
+        }
+
+        const newOrder = await Order.create({
+            userId: session?.user ? (session.user as any).id : null,
+            items: mappedItems,
+            guestInfo: {
+                name: body.guestInfo.name,
+                email: body.guestInfo.email || "",
+                phone: body.guestInfo.phone,
+                address: body.guestInfo.address,
+            },
             totalAmount: body.totalAmount,
-            paymentMethod: body.paymentMethod,
+            paymentMethod: body.paymentMethod || "cod",
             status: "pending",
             paymentStatus: "pending",
             notes: body.guestInfo?.notes,
@@ -37,6 +59,9 @@ export async function POST(req: Request) {
         return NextResponse.json({ message: "Đặt hàng thành công", orderId: newOrder._id }, { status: 201 });
     } catch (error: any) {
         console.error("Order Creation Error:", error);
+        if (error.name === "ValidationError") {
+            return NextResponse.json({ message: error.message }, { status: 400 });
+        }
         return NextResponse.json({ message: "Lỗi hệ thống khi tạo đơn hàng" }, { status: 500 });
     }
 }
