@@ -2,8 +2,8 @@ import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI!;
 
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable');
+if (!MONGODB_URI || MONGODB_URI.includes('<db_password>')) {
+  throw new Error('Please define a valid MONGODB_URI environment variable in .env.local and replace <db_password> with your MongoDB password');
 }
 
 interface MongooseCache {
