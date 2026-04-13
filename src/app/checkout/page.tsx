@@ -64,7 +64,13 @@ export default function CheckoutPage() {
     });
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [successData, setSuccessData] = useState<{ orderId: string; paymentMethod: string } | null>(null);
+    const [successData, setSuccessData] = useState<{
+        orderId: string;
+        paymentMethod: string;
+        amount?: number;
+        qrUrl?: string;
+        qrDescription?: string;
+    } | null>(null);
     const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
     const [copied, setCopied] = useState(false);
 
@@ -104,6 +110,40 @@ export default function CheckoutPage() {
         setToast({ message, type });
     };
 
+    const buildBankTransferPopupHtml = (qrUrl: string, amount: number, description: string, orderId: string) => {
+        const formattedAmount = amount.toLocaleString("vi-VN");
+        return `<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<title>Thông tin chuyển khoản</title>
+<style>
+  body { margin: 0; font-family: Inter, system-ui, sans-serif; background: #f4f7fb; color: #111827; }
+  .card { max-width: 520px; margin: 32px auto; padding: 24px; background: #ffffff; border-radius: 24px; box-shadow: 0 20px 50px rgba(15,23,42,0.08); }
+  .title { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; color: #1e3a8a; margin-bottom: 18px; }
+  .qr { width: 100%; max-width: 320px; border-radius: 24px; overflow: hidden; margin: 0 auto 22px; border: 1px solid #e2e8f0; }
+  .row { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 12px; font-size: 15px; }
+  .label { color: #6b7280; }
+  .value { font-weight: 700; color: #111827; text-align: right; }
+  .amount { color: #b91c1c; }
+  .note { margin-top: 14px; color: #475569; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="title">Thông tin chuyển khoản</div>
+  <div class="qr"><img src="${qrUrl}" alt="QR chuyển khoản" style="display:block;width:100%;height:auto;" /></div>
+  <div class="row"><span class="label">Ngân hàng:</span><span class="value">MB Bank</span></div>
+  <div class="row"><span class="label">Số tài khoản:</span><span class="value">078911111</span></div>
+  <div class="row"><span class="label">Chủ TK:</span><span class="value">NONG MANH THANH</span></div>
+  <div class="row"><span class="label">Số tiền:</span><span class="value amount">${formattedAmount}đ</span></div>
+  <div class="row"><span class="label">Nội dung CK:</span><span class="value">${description}</span></div>
+  <p class="note">Mã đơn hàng: ${orderId}</p>
+</div>
+</body>
+</html>`;
+    };
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -119,6 +159,18 @@ export default function CheckoutPage() {
             return;
         }
 
+        const orderAmount = getSelectedPrice();
+        const qrDescription = `donhang${Math.floor(10000 + Math.random() * 90000)}`;
+        const qrUrl = `https://qr.sepay.vn/img?bank=MBBank&acc=078911111&template=&amount=${Math.round(orderAmount)}&des=${encodeURIComponent(qrDescription)}`;
+
+        let paymentWindow: Window | null = null;
+        if (formData.paymentMethod === "bank_transfer" && typeof window !== "undefined") {
+            paymentWindow = window.open("", "_blank", "width=520,height=700");
+            if (paymentWindow) {
+                paymentWindow.document.write("<p style='font-family:system-ui,sans-serif;padding:32px;text-align:center;'>Đang tạo thông tin chuyển khoản...</p>");
+            }
+        }
+
         setIsSubmitting(true);
         try {
             const res = await fetch("/api/orders", {
@@ -126,7 +178,7 @@ export default function CheckoutPage() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     items: selectedItems,
-                    totalAmount: getSelectedPrice(),
+                    totalAmount: orderAmount,
                     guestInfo: formData,
                     paymentMethod: formData.paymentMethod,
                 }),
@@ -157,9 +209,23 @@ export default function CheckoutPage() {
                     localStorage.setItem("guestAddress", formData.address);
                 }
                 
-                setSuccessData({ orderId: data.orderId, paymentMethod: formData.paymentMethod });
+                setSuccessData({
+                    orderId: data.orderId,
+                    paymentMethod: formData.paymentMethod,
+                    amount: orderAmount,
+                    qrUrl,
+                    qrDescription,
+                });
+                if (paymentWindow && !paymentWindow.closed) {
+                    const html = buildBankTransferPopupHtml(qrUrl, orderAmount, qrDescription, data.orderId);
+                    paymentWindow.document.open();
+                    paymentWindow.document.write(html);
+                    paymentWindow.document.close();
+                    paymentWindow.focus();
+                }
                 showToast("Đặt hàng thành công! Skyfood sẽ liên hệ bạn sớm nhé.", "success");
             } else {
+                if (paymentWindow && !paymentWindow.closed) paymentWindow.close();
                 showToast("Có lỗi khi tạo đơn hàng. Vui lòng thử lại.", "error");
             }
         } catch {
@@ -208,15 +274,24 @@ export default function CheckoutPage() {
                             <MdOutlinePayment className="w-5 h-5" />
                             Thông tin chuyển khoản
                         </p>
+                        {successData.qrUrl && (
+                            <div className="mb-4 flex justify-center">
+                                <img
+                                    src={successData.qrUrl}
+                                    alt="QR code chuyển khoản"
+                                    className="w-48 h-48 object-contain rounded-2xl border border-gray-200"
+                                />
+                            </div>
+                        )}
                         <div className="space-y-1.5 text-sm">
                             <div className="flex justify-between"><span className="text-gray-500">Ngân hàng:</span><strong>MB Bank</strong></div>
-                            <div className="flex justify-between"><span className="text-gray-500">Số tài khoản:</span><strong>0123456789</strong></div>
+                            <div className="flex justify-between"><span className="text-gray-500">Số tài khoản:</span><strong>078911111</strong></div>
                             <div className="flex justify-between"><span className="text-gray-500">Chủ TK:</span><strong>SNACK HUB VN</strong></div>
                             <div className="flex justify-between"><span className="text-gray-500">Số tiền:</span>
-                                <strong className="text-red-700">{getSelectedPrice?.() ? `${getSelectedPrice().toLocaleString("vi-VN")}đ` : ""}</strong>
+                                <strong className="text-red-700">{successData.amount ? `${successData.amount.toLocaleString("vi-VN")}đ` : ""}</strong>
                             </div>
                             <div className="flex justify-between"><span className="text-gray-500">Nội dung CK:</span>
-                                <strong className="font-mono text-xs">{successData.orderId.slice(-8).toUpperCase()}</strong>
+                                <strong className="font-mono text-xs">{successData.qrDescription || ""}</strong>
                             </div>
                         </div>
                     </div>
@@ -357,11 +432,9 @@ export default function CheckoutPage() {
                                         <p className="text-xs text-gray-500 mt-0.5">Chuyển khoản theo thông tin sau đây</p>
                                         {formData.paymentMethod === "bank_transfer" && (
                                             <div className="mt-3 bg-white rounded-xl border border-blue-200 p-3 space-y-1.5 text-sm">
-                                                <div className="flex justify-between"><span className="text-gray-500">Ngân hàng:</span><strong>MB Bank</strong></div>
-                                                <div className="flex justify-between"><span className="text-gray-500">Số TK:</span><strong>0123456789</strong></div>
-                                                <div className="flex justify-between"><span className="text-gray-500">Chủ TK:</span><strong>SNACK HUB VN</strong></div>
+                                                
                                                 <div className="flex justify-between"><span className="text-gray-500">Số tiền:</span><strong className="text-red-700">{getTotalPrice().toLocaleString("vi-VN")}đ</strong></div>
-                                                <p className="text-xs text-gray-400 pt-1">Nội dung CK: Mã đơn hàng (hiển thị sau khi đặt)</p>
+                                                <p className="text-xs text-gray-400 pt-1">  (hiển thị sau khi xác nhận đặt hàng)</p>
                                             </div>
                                         )}
                                     </div>
