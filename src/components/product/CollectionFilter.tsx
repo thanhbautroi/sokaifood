@@ -13,6 +13,7 @@ type Product = {
     images: string[];
     collection: string;
     inStock: boolean;
+    quantity?: number;
 };
 
 type SortOption = "default" | "price_asc" | "price_desc" | "name_asc";

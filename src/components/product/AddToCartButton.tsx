@@ -18,6 +18,7 @@ type Product = {
     images: string[];
     slug: string;
     inStock: boolean;
+    quantity?: number;
 };
 
 type GuestForm = {
@@ -30,43 +31,67 @@ type ModalIntent = "buy_now" | "add_cart";
 
 export default function AddToCartButton({ product }: { product: Product }) {
     const addItem = useCartStore((state) => state.addItem);
+    const items = useCartStore((state) => state.items);
     const { data: session, status } = useSession();
     const router = useRouter();
 
     const [addedToCart, setAddedToCart] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [cartError, setCartError] = useState("");
     const [modalIntent, setModalIntent] = useState<ModalIntent>("add_cart");
     const [mode, setMode] = useState<"choose" | "guest">("choose");
     const [guestForm, setGuestForm] = useState<GuestForm>({ name: "", phone: "", address: "" });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [guestSuccess, setGuestSuccess] = useState(false);
 
+    const availableStock = typeof product.quantity === "number" ? product.quantity : 0;
+    const currentQuantityInCart = items.find((i) => i._id === product._id)?.quantity || 0;
+    const buyNowDisabled = !product.inStock || availableStock <= 0;
+    const addToCartDisabled = !product.inStock || availableStock <= 0;
+    const buyNowClasses = "flex-1 flex items-center justify-center gap-2 py-4 bg-red-500 text-white rounded-full font-bold text-base transition-all shadow-lg shadow-red-500/30 hover:bg-red-700 hover:shadow-red-500/50 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed";
+    const addButtonClasses = addedToCart
+        ? "flex-1 flex items-center justify-center gap-2 py-4 rounded-full font-bold text-base transition-all border-2 bg-green-500 border-green-500 text-white shadow-lg shadow-green-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+        : "flex-1 flex items-center justify-center gap-2 py-4 rounded-full font-bold text-base transition-all border-2 bg-white border-red-500 text-red-500 hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed";
+
+    const validateStock = (additionalQuantity: number) => {
+        if (currentQuantityInCart + additionalQuantity > availableStock) {
+            const remaining = Math.max(availableStock - currentQuantityInCart, 0);
+            setCartError(
+                remaining > 0
+                    ? `Chỉ còn ${remaining} sản phẩm trong kho. Vui lòng giảm số lượng hoặc chọn sản phẩm khác.`
+                    : "Sản phẩm đã hết hàng hoặc đã đạt giới hạn tồn kho."
+            );
+            return false;
+        }
+        setCartError("");
+        return true;
+    };
+
     const doAddToCart = () => {
+        if (!validateStock(1)) return;
+
         addItem({
             _id: product._id,
             name: product.name,
             price: product.price,
             image: product.images?.[0] || "",
             slug: product.slug,
+            stock: product.quantity,
         });
     };
 
     // "Mua ngay" button
     const handleBuyNow = () => {
-        if (!product.inStock) return;
-        if (status === "authenticated") {
-            doAddToCart();
-            router.push("/checkout");
-        } else {
-            setModalIntent("buy_now");
-            setMode("choose");
-            setShowModal(true);
-        }
+        if (buyNowDisabled) return;
+        if (!validateStock(1)) return;
+        doAddToCart();
+        router.push("/cart");
     };
 
     // "Thêm vào giỏ" button
     const handleAddToCart = () => {
-        if (!product.inStock) return;
+        if (addToCartDisabled) return;
+        if (!validateStock(1)) return;
         if (status === "authenticated") {
             doAddToCart();
             setAddedToCart(true);
@@ -80,7 +105,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
 
     const handleLoginAndCart = () => {
         doAddToCart();
-        router.push("/login");
+        router.push("/cart");
     };
 
     const validateGuestForm = () => {
@@ -150,12 +175,18 @@ export default function AddToCartButton({ product }: { product: Product }) {
     return (
         <>
             {/* Two separate buttons */}
-            <div className="flex gap-3">
+            <div className="flex gap-3 flex-col">
+                {cartError && (
+                    <div className="rounded-xl bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-sm">
+                        {cartError}
+                    </div>
+                )}
+                <div className="flex gap-3">
                 {/* Buy Now */}
                 <button
                     onClick={handleBuyNow}
-                    disabled={!product.inStock}
-                    className="flex-1 flex items-center justify-center gap-2 py-4 bg-red-500 text-white rounded-full font-bold text-base transition-all shadow-lg shadow-red-500/30 hover:bg-red-700 hover:shadow-red-500/50 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:-translate-y-0"
+                    disabled={buyNowDisabled}
+                    className={buyNowClasses}
                 >
                     <Zap className="w-5 h-5" />
                     Mua ngay
@@ -164,12 +195,8 @@ export default function AddToCartButton({ product }: { product: Product }) {
                 {/* Add to Cart */}
                 <button
                     onClick={handleAddToCart}
-                    disabled={!product.inStock}
-                    className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-full font-bold text-base transition-all border-2 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:-translate-y-0
-            ${addedToCart
-                            ? "bg-green-500 border-green-500 text-white shadow-lg shadow-green-500/30"
-                            : "bg-white border-red-500 text-red-500 hover:bg-red-50"
-                        }`}
+                    disabled={addToCartDisabled}
+                    className={addButtonClasses}
                 >
                     {addedToCart ? (
                         <>
@@ -331,6 +358,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
                     </div>
                 </div>
             )}
+            </div>
         </>
     );
 }

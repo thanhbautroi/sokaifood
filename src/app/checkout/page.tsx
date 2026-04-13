@@ -44,7 +44,15 @@ function validate(formData: Record<string, string>) {
 export default function CheckoutPage() {
     const router = useRouter();
     const { data: session } = useSession();
-    const { items, getTotalPrice, clearCart } = useCartStore();
+    const { items, getSelectedItems, getTotalPrice, getSelectedPrice, clearCart } = useCartStore();
+    const selectedItems = getSelectedItems();
+
+    // Redirect to cart if no items selected
+    useEffect(() => {
+        if (items.length > 0 && selectedItems.length === 0) {
+            router.push("/cart");
+        }
+    }, [items.length, selectedItems.length, router]);
 
     const [formData, setFormData] = useState({
         name: session?.user?.name || "",
@@ -59,6 +67,38 @@ export default function CheckoutPage() {
     const [successData, setSuccessData] = useState<{ orderId: string; paymentMethod: string } | null>(null);
     const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
     const [copied, setCopied] = useState(false);
+
+    // Load saved user info on mount
+    useEffect(() => {
+        const loadSavedInfo = async () => {
+            if (session?.user) {
+                // Load from API if user is logged in
+                try {
+                    const res = await fetch("/api/profile");
+                    if (res.ok) {
+                        const data = await res.json();
+                        setFormData(prev => ({
+                            ...prev,
+                            phone: data.user?.phone || "",
+                            address: data.user?.address || "",
+                        }));
+                    }
+                } catch (err) {
+                    console.error("Failed to load user info:", err);
+                }
+            } else {
+                // Load from localStorage if guest
+                const savedPhoneLocal = localStorage.getItem("guestPhone") || "";
+                const savedAddressLocal = localStorage.getItem("guestAddress") || "";
+                setFormData(prev => ({
+                    ...prev,
+                    phone: savedPhoneLocal,
+                    address: savedAddressLocal,
+                }));
+            }
+        };
+        loadSavedInfo();
+    }, [session]);
 
     const showToast = (message: string, type: "success" | "error") => {
         setToast({ message, type });
@@ -85,8 +125,8 @@ export default function CheckoutPage() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    items,
-                    totalAmount: getTotalPrice(),
+                    items: selectedItems,
+                    totalAmount: getSelectedPrice(),
                     guestInfo: formData,
                     paymentMethod: formData.paymentMethod,
                 }),
@@ -95,6 +135,28 @@ export default function CheckoutPage() {
             if (res.ok) {
                 const data = await res.json();
                 clearCart();
+                
+                // Save delivery info for future orders
+                if (session?.user) {
+                    // Save to user profile if logged in
+                    try {
+                        await fetch("/api/profile", {
+                            method: "PUT",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                phone: formData.phone,
+                                address: formData.address,
+                            }),
+                        });
+                    } catch (err) {
+                        console.error("Failed to save profile:", err);
+                    }
+                } else {
+                    // Save to localStorage if guest
+                    localStorage.setItem("guestPhone", formData.phone);
+                    localStorage.setItem("guestAddress", formData.address);
+                }
+                
                 setSuccessData({ orderId: data.orderId, paymentMethod: formData.paymentMethod });
                 showToast("Đặt hàng thành công! Skyfood sẽ liên hệ bạn sớm nhé.", "success");
             } else {
@@ -151,7 +213,7 @@ export default function CheckoutPage() {
                             <div className="flex justify-between"><span className="text-gray-500">Số tài khoản:</span><strong>0123456789</strong></div>
                             <div className="flex justify-between"><span className="text-gray-500">Chủ TK:</span><strong>SNACK HUB VN</strong></div>
                             <div className="flex justify-between"><span className="text-gray-500">Số tiền:</span>
-                                <strong className="text-red-700">{getTotalPrice?.() ? `${getTotalPrice().toLocaleString("vi-VN")}đ` : ""}</strong>
+                                <strong className="text-red-700">{getSelectedPrice?.() ? `${getSelectedPrice().toLocaleString("vi-VN")}đ` : ""}</strong>
                             </div>
                             <div className="flex justify-between"><span className="text-gray-500">Nội dung CK:</span>
                                 <strong className="font-mono text-xs">{successData.orderId.slice(-8).toUpperCase()}</strong>
@@ -314,7 +376,7 @@ export default function CheckoutPage() {
                             <h3 className="text-lg font-bold text-gray-900 mb-6">Đơn hàng của bạn</h3>
 
                             <div className="space-y-4 mb-6 max-h-[300px] overflow-y-auto pr-2">
-                                {items.map(item => (
+                                {selectedItems.map(item => (
                                     <div key={item._id} className="flex gap-3 items-center">
                                         <div className="w-16 h-16 relative bg-white rounded-xl border border-gray-200 overflow-hidden shrink-0">
                                             <Image src={item.image || "/images/placeholder.jpg"} alt={item.name} fill className="object-cover" />
@@ -333,7 +395,7 @@ export default function CheckoutPage() {
                             <div className="border-t border-gray-200 pt-4 space-y-2">
                                 <div className="flex justify-between text-gray-600 text-sm">
                                     <span>Tạm tính</span>
-                                    <span>{getTotalPrice().toLocaleString("vi-VN")}đ</span>
+                                    <span>{getSelectedPrice().toLocaleString("vi-VN")}đ</span>
                                 </div>
                                 <div className="flex justify-between text-gray-600 text-sm">
                                     <span>Phí vận chuyển</span>
@@ -341,7 +403,7 @@ export default function CheckoutPage() {
                                 </div>
                                 <div className="flex justify-between items-end border-t border-gray-200 pt-3 mt-2">
                                     <span className="font-bold text-gray-900">Tổng thanh toán</span>
-                                    <span className="text-2xl font-bold text-red-500">{getTotalPrice().toLocaleString("vi-VN")}đ</span>
+                                    <span className="text-2xl font-bold text-red-500">{getSelectedPrice().toLocaleString("vi-VN")}đ</span>
                                 </div>
                             </div>
 

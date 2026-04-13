@@ -13,6 +13,7 @@ export interface IProduct {
   collectionType: CollectionType;
   featured: boolean;
   inStock: boolean;
+  quantity: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -27,6 +28,7 @@ interface IProductDocument extends Document {
   collectionType: CollectionType;
   featured: boolean;
   inStock: boolean;
+  quantity: number;
 }
 
 const ProductSchema = new Schema<IProductDocument>(
@@ -40,6 +42,7 @@ const ProductSchema = new Schema<IProductDocument>(
     collectionType: { type: String, enum: ['do-cay', 'trai-cay-say', 'cac-loai-hat', 'do-uong'], required: true },
     featured: { type: Boolean, default: false },
     inStock: { type: Boolean, default: true },
+    quantity: { type: Number, required: true, default: 0 },
   },
   { timestamps: true }
 );

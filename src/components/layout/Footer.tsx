@@ -51,22 +51,22 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <Link href="/collection/do-cay" className="hover:text-red-400 transition-colors">
-                  Đồ Cay Nội Địa
+                  Đồ cay nội địa
                 </Link>
               </li>
               <li>
                 <Link href="/collection/trai-cay-say" className="hover:text-red-400 transition-colors">
-                  Trái Cây Sấy Dẻo
+                  Trái cây sấy dẻo
                 </Link>
               </li>
               <li>
                 <Link href="/collection/cac-loai-hat" className="hover:text-red-400 transition-colors">
-                  Các Loại Hạt Dinh Dưỡng
+                  Các loại hạt dinh dưỡng
                 </Link>
               </li>
               <li>
                 <Link href="/collection/do-uong" className="hover:text-red-400 transition-colors">
-                  Nước Giải Khát
+                  Nước giải khát
                 </Link>
               </li>
             </ul>
@@ -112,7 +112,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
             <p>© {new Date().getFullYear()} SkyFood. Nền tảng phân phối đồ ăn vặt hàng đầu.</p>
             <p className="text-gray-500">
-              đồ án thực hiện bới nhóm 5, lớp UDPM23-02
+              Đồ án thực hiện bởi nhóm 5, lớp UDPM23-02
             </p>
           </div>
         </div>

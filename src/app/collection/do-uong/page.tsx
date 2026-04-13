@@ -24,6 +24,7 @@ export default async function DoUongPage() {
         images: p.images,
         collection: p.collectionType,
         inStock: p.inStock,
+        quantity: p.quantity,
     }));
 
     return (

@@ -57,6 +57,7 @@ export default async function ProductDetailPage({ params }: Props) {
     collection: productData.collectionType,
     featured: productData.featured,
     inStock: productData.inStock,
+    quantity: productData.quantity ?? 0,
   };
 
   const collectionLabel = COLLECTION_LABELS[product.collection] || product.collection;
@@ -80,6 +81,7 @@ export default async function ProductDetailPage({ params }: Props) {
     collection: p.collectionType,
     featured: p.featured,
     inStock: p.inStock,
+    quantity: p.quantity,
   }));
 
   return (

@@ -15,6 +15,7 @@ interface Product {
   collectionType: string;
   inStock: boolean;
   featured: boolean;
+  quantity: number;
 }
 
 const COLLECTION_LABELS: Record<string, string> = {
@@ -146,6 +147,7 @@ export default function AdminProductsPage() {
                 <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Sản phẩm</th>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Giá</th>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Danh mục</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Số lượng</th>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Trạng thái</th>
                 <th className="px-6 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Thao tác</th>
               </tr>
@@ -173,6 +175,9 @@ export default function AdminProductsPage() {
                     {product.originalPrice && (
                       <div className="text-xs text-gray-400 line-through">{product.originalPrice.toLocaleString("vi-VN")}đ</div>
                     )}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-900">
+                    {product.quantity ?? 0}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600">
                     {COLLECTION_LABELS[product.collectionType] || product.collectionType}

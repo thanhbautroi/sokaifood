@@ -6,6 +6,7 @@ import { Check, X, Clock, Package, Eye } from "lucide-react";
 export default function AdminOrdersPage() {
     const [orders, setOrders] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [selectedOrder, setSelectedOrder] = useState<any | null>(null);
 
     const fetchOrders = async () => {
         setIsLoading(true);
@@ -38,12 +39,23 @@ export default function AdminOrdersPage() {
             if (res.ok) {
                 // Update local state instead of refetching for speed
                 setOrders(orders.map(o => o._id === orderId ? { ...o, status: newStatus } : o));
+                if (selectedOrder?._id === orderId) {
+                    setSelectedOrder({ ...selectedOrder, status: newStatus });
+                }
             } else {
                 alert("Lỗi khi cập nhật trạng thái");
             }
         } catch (error) {
             alert("Lỗi hệ thống");
         }
+    };
+
+    const handleViewOrder = (order: any) => {
+        setSelectedOrder(order);
+    };
+
+    const closeOrderModal = () => {
+        setSelectedOrder(null);
     };
 
     if (isLoading) {
@@ -105,7 +117,11 @@ export default function AdminOrdersPage() {
                                             </select>
                                         </td>
                                         <td className="p-4 text-center">
-                                            <button className="p-2 text-slate-400 hover:text-red-500 transition-colors bg-white rounded-lg hover:shadow-sm" title="Xem chi tiết">
+                                            <button
+                                                onClick={() => handleViewOrder(order)}
+                                                className="p-2 text-slate-400 hover:text-red-500 transition-colors bg-white rounded-lg hover:shadow-sm"
+                                                title="Xem chi tiết"
+                                            >
                                                 <Eye className="w-5 h-5" />
                                             </button>
                                         </td>
@@ -116,6 +132,63 @@ export default function AdminOrdersPage() {
                     </table>
                 </div>
             </div>
+
+            {selectedOrder && (
+                <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div className="w-full max-w-3xl bg-white rounded-3xl shadow-2xl overflow-hidden">
+                        <div className="flex items-center justify-between px-6 py-5 border-b border-slate-200">
+                            <div>
+                                <h2 className="text-xl font-semibold text-slate-900">Chi tiết đơn hàng</h2>
+                                <p className="text-sm text-slate-500">Mã đơn: #{selectedOrder._id.slice(-6).toUpperCase()}</p>
+                            </div>
+                            <button onClick={closeOrderModal} className="text-slate-500 hover:text-slate-900">Đóng</button>
+                        </div>
+
+                        <div className="px-6 py-5 space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="rounded-2xl border border-slate-200 p-4 bg-slate-50">
+                                    <h3 className="text-sm font-semibold text-slate-700 mb-3">Thông tin khách hàng</h3>
+                                    <p className="text-sm text-slate-900 font-medium">{selectedOrder.guestInfo?.name || 'Khách'}</p>
+                                    <p className="text-sm text-slate-500">{selectedOrder.guestInfo?.phone || '-'}</p>
+                                    <p className="mt-3 text-sm text-slate-600">{selectedOrder.guestInfo?.address || '-'}</p>
+                                </div>
+                                <div className="rounded-2xl border border-slate-200 p-4 bg-slate-50">
+                                    <h3 className="text-sm font-semibold text-slate-700 mb-3">Thông tin đơn hàng</h3>
+                                    <p className="text-sm text-slate-500">Thanh toán: <span className="font-medium text-slate-900">{selectedOrder.paymentMethod === 'bank_transfer' ? 'Chuyển khoản' : 'COD'}</span></p>
+                                    <p className="text-sm text-slate-500">Trạng thái: <span className="font-medium text-slate-900">{selectedOrder.status}</span></p>
+                                    <p className="text-sm text-slate-500">Tổng tiền: <span className="font-semibold text-red-700">{selectedOrder.totalAmount.toLocaleString('vi-VN')}₫</span></p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 className="text-sm font-semibold text-slate-700 mb-4">Sản phẩm trong đơn</h3>
+                                <div className="overflow-x-auto rounded-3xl border border-slate-200">
+                                    <table className="w-full text-left text-sm">
+                                        <thead className="bg-slate-50 text-slate-500 uppercase tracking-wide text-xs">
+                                            <tr>
+                                                <th className="px-4 py-3">Sản phẩm</th>
+                                                <th className="px-4 py-3">Số lượng</th>
+                                                <th className="px-4 py-3">Đơn giá</th>
+                                                <th className="px-4 py-3">Thành tiền</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-slate-100">
+                                            {selectedOrder.items.map((item: any) => (
+                                                <tr key={`${item.productId}-${item.name}`}>
+                                                    <td className="px-4 py-3 font-medium text-slate-900">{item.name}</td>
+                                                    <td className="px-4 py-3 text-slate-600">{item.quantity}</td>
+                                                    <td className="px-4 py-3 text-slate-600">{item.price.toLocaleString('vi-VN')}₫</td>
+                                                    <td className="px-4 py-3 text-slate-900 font-semibold">{(item.quantity * item.price).toLocaleString('vi-VN')}₫</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

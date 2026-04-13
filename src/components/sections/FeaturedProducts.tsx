@@ -20,6 +20,7 @@ export default async function FeaturedProducts() {
     collection: p.collectionType,
     featured: p.featured,
     inStock: p.inStock,
+    quantity: p.quantity,
   }));
 
   return (

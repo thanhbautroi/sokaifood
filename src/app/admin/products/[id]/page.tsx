@@ -23,6 +23,7 @@ export default function EditProductPage() {
     description: "",
     price: "",
     originalPrice: "",
+    quantity: "0",
     collectionType: "do-cay",
     featured: false,
     inStock: true,
@@ -49,6 +50,7 @@ export default function EditProductPage() {
           description: product.description,
           price: product.price.toString(),
           originalPrice: product.originalPrice?.toString() || "",
+          quantity: product.quantity?.toString() || "0",
           collectionType: product.collectionType,
           featured: product.featured,
           inStock: product.inStock,
@@ -123,6 +125,7 @@ export default function EditProductPage() {
         ...formData,
         price: parseFloat(formData.price),
         originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : undefined,
+        quantity: parseInt(formData.quantity, 10) || 0,
         images: imageUrls,
       };
 
@@ -251,6 +254,20 @@ export default function EditProductPage() {
                   value={formData.originalPrice}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Số lượng tồn kho
+                </label>
+                <input
+                  type="number"
+                  name="quantity"
+                  min={0}
+                  value={formData.quantity}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
+                  required
                 />
               </div>
             </div>

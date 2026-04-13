@@ -1,4 +1,5 @@
 import Order from "@/models/Order";
+import Product from "@/models/Product";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
@@ -40,6 +41,26 @@ export async function POST(req: Request) {
             return NextResponse.json({ message: "Mã sản phẩm không hợp lệ trong giỏ hàng." }, { status: 400 });
         }
 
+        const productIds = mappedItems.map((item: any) => item.productId);
+        const products = await Product.find({ _id: { $in: productIds } }).lean();
+        const productMap = new Map(products.map((p: any) => [p._id.toString(), p]));
+
+        for (const item of mappedItems) {
+            const product = productMap.get(item.productId.toString());
+            if (!product) {
+                return NextResponse.json({ message: `Sản phẩm không tồn tại: ${item.name}` }, { status: 400 });
+            }
+            if (!product.inStock || typeof product.quantity !== "number" || product.quantity <= 0) {
+                return NextResponse.json({ message: `Sản phẩm ${product.name} hiện đã hết hàng.` }, { status: 400 });
+            }
+            if (typeof item.quantity !== "number" || item.quantity <= 0) {
+                return NextResponse.json({ message: `Số lượng không hợp lệ cho sản phẩm ${product.name}.` }, { status: 400 });
+            }
+            if (typeof product.quantity === "number" && item.quantity > product.quantity) {
+                return NextResponse.json({ message: `Sản phẩm ${product.name} chỉ còn ${product.quantity} sản phẩm trong kho.` }, { status: 400 });
+            }
+        }
+
         const newOrder = await Order.create({
             userId: session?.user ? (session.user as any).id : null,
             items: mappedItems,
@@ -55,6 +76,17 @@ export async function POST(req: Request) {
             paymentStatus: "pending",
             notes: body.guestInfo?.notes,
         });
+
+        // Update product quantities after successful order creation
+        for (const item of mappedItems) {
+            const product = productMap.get(item.productId.toString());
+            if (product && typeof product.quantity === "number") {
+                await Product.updateOne(
+                    { _id: item.productId },
+                    { $inc: { quantity: -item.quantity } }
+                );
+            }
+        }
 
         return NextResponse.json({ message: "Đặt hàng thành công", orderId: newOrder._id }, { status: 201 });
     } catch (error: any) {

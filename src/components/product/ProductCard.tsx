@@ -16,6 +16,8 @@ interface ProductCardProps {
     originalPrice?: number;
     images: string[];
     collection: string;
+    quantity?: number;
+    inStock?: boolean;
   };
 }
 
@@ -69,11 +71,15 @@ export default function ProductCard({ product }: ProductCardProps) {
             </motion.div>
 
             {/* Sale badge */}
-            {product.originalPrice && (
+            {(typeof product.quantity === "number" && product.quantity <= 0) ? (
+              <div className="absolute top-3 left-3 bg-gray-800 text-white text-xs px-3 py-1 font-bold rounded-full">
+                Hết hàng
+              </div>
+            ) : product.originalPrice ? (
               <div className="absolute top-3 left-3 bg-red-500 text-white text-xs px-3 py-1 font-bold rounded-full">
                 SALE
               </div>
-            )}
+            ) : null}
           </div>
 
           {/* Info */}

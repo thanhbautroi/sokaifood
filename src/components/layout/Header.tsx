@@ -11,10 +11,10 @@ import { useCartStore } from "@/store/useCartStore";
 
 const navLinks = [
   { name: "Trang chủ", href: "/" },
-  { name: "Đồ Cay", href: "/collection/do-cay" },
-  { name: "Trái Cây Sấy", href: "/collection/trai-cay-say" },
-  { name: "Các Loại Hạt", href: "/collection/cac-loai-hat" },
-  { name: "Đồ Uống", href: "/collection/do-uong" },
+  { name: "Đồ cay", href: "/collection/do-cay" },
+  { name: "Trái cây sấy", href: "/collection/trai-cay-say" },
+  { name: "Các loại hạt", href: "/collection/cac-loai-hat" },
+  { name: "Đồ uống", href: "/collection/do-uong" },
   { name: "Đơn hàng", href: "/orders" },
   { name: "Liên hệ", href: "/contact" },
 ];
