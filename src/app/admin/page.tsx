@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import * as XLSX from "xlsx";
 import {
   TrendingUp, ShoppingCart, Users, Clock, MessageCircle,
-  Package, CheckCircle2, XCircle, Truck, RefreshCw
+  Package, CheckCircle2, XCircle, Truck, RefreshCw, Download, Calendar, X
 } from "lucide-react";
 
 interface Stats {
@@ -30,6 +31,9 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [startDate, setStartDate] = useState(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]);
+  const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0]);
 
   const fetchStats = async () => {
     setRefreshing(true);
@@ -40,6 +44,62 @@ export default function AdminDashboard() {
     }
     setRefreshing(false);
     setLoading(false);
+  };
+
+  const exportToExcel = () => {
+    try {
+      if (!stats?.recentOrders || stats.recentOrders.length === 0) {
+        alert("Không có dữ liệu để xuất!");
+        return;
+      }
+
+      const startDateTime = new Date(startDate);
+      const endDateTime = new Date(endDate);
+      endDateTime.setHours(23, 59, 59, 999);
+
+      const filteredOrders = stats.recentOrders.filter((order: any) => {
+        const orderDate = new Date(order.createdAt || order._id?.getTimestamp?.() || new Date());
+        return orderDate >= startDateTime && orderDate <= endDateTime;
+      });
+
+      if (filteredOrders.length === 0) {
+        alert("Không có đơn hàng trong khoảng thời gian này!");
+        return;
+      }
+
+      const exportData = filteredOrders.map((order: any) => ({
+        "Mã đơn": order._id?.toString().slice(-8).toUpperCase() || "",
+        "Khách hàng": order.guestInfo?.name || order.userId?.name || "Khách",
+        "Số điện thoại": order.guestInfo?.phone || "",
+        "Địa chỉ": order.guestInfo?.address || "",
+        "Tổng tiền": Math.round(order.totalAmount ?? 0),
+        "Phương thức": order.paymentMethod === "cod" ? "COD" : "Chuyển khoản",
+        "Trạng thái": STATUS_CONFIG[order.status]?.label || "Chờ xử lý",
+        "Ngày tạo": order.createdAt ? new Date(order.createdAt).toLocaleString("vi-VN") : "",
+      }));
+
+      const ws = XLSX.utils.json_to_sheet(exportData);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Đơn hàng");
+
+      ws["!cols"] = [
+        { wch: 12 },
+        { wch: 20 },
+        { wch: 12 },
+        { wch: 30 },
+        { wch: 12 },
+        { wch: 15 },
+        { wch: 15 },
+        { wch: 20 },
+      ];
+
+      const fileName = `don-hang-${startDate}_${endDate}.xlsx`;
+      XLSX.writeFile(wb, fileName);
+      setShowDatePicker(false);
+    } catch (error) {
+      console.error("Lỗi xuất Excel:", error);
+      alert("Có lỗi khi xuất Excel. Vui lòng thử lại.");
+    }
   };
 
   useEffect(() => { fetchStats(); }, []);
@@ -59,12 +119,60 @@ export default function AdminDashboard() {
           <h1 className="text-2xl font-bold text-gray-900">Tổng quan Hệ thống</h1>
           <p className="text-sm text-gray-500 mt-1">Cập nhật theo thời gian thực</p>
         </div>
-        <button onClick={fetchStats} disabled={refreshing}
-          className="flex items-center gap-2 px-4 py-2 text-sm border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors disabled:opacity-50">
-          <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`} />
-          Làm mới
-        </button>
+        <div className="flex gap-3">
+          <button onClick={fetchStats} disabled={refreshing}
+            className="flex items-center gap-2 px-4 py-2 text-sm border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors disabled:opacity-50">
+            <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`} />
+            Làm mới
+          </button>
+          <button onClick={() => setShowDatePicker(!showDatePicker)}
+            className="flex items-center gap-2 px-4 py-2 text-sm border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
+            <Download className="w-4 h-4" />
+            Xuất Excel
+          </button>
+        </div>
       </div>
+
+      {/* Date Picker Modal */}
+      {showDatePicker && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                <Calendar className="w-5 h-5" />
+                Chọn khoảng thời gian
+              </h3>
+              <button onClick={() => setShowDatePicker(false)} className="p-1 hover:bg-gray-100 rounded-lg transition-colors">
+                <X className="w-5 h-5 text-gray-400" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Từ ngày</label>
+                <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Đến ngày</label>
+                <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500" />
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <button onClick={() => setShowDatePicker(false)}
+                className="flex-1 px-4 py-2 text-sm border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors font-medium text-gray-700">
+                Hủy
+              </button>
+              <button onClick={exportToExcel}
+                className="flex-1 px-4 py-2 text-sm bg-red-500 text-white rounded-xl hover:bg-red-700 transition-colors font-medium">
+                Xuất Excel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Stat Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">

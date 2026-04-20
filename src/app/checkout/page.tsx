@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {
     CheckCircle2, ArrowLeft, Copy, Package, ShoppingBag,
-    AlertCircle, Phone, User, Mail, MapPin, ClipboardList
+    AlertCircle, Phone, User, Mail, MapPin, ClipboardList, Hourglass
 } from "lucide-react";
 import { MdOutlinePayment } from "react-icons/md";
 import { BsCashStack } from "react-icons/bs";
@@ -269,31 +269,11 @@ export default function CheckoutPage() {
 
                 {/* Bank Transfer Info */}
                 {successData.paymentMethod === "bank_transfer" && (
-                    <div className="bg-blue-50 border border-blue-200 rounded-2xl p-5 mb-6 text-left max-w-sm w-full">
-                        <p className="font-bold text-blue-900 mb-3 flex items-center gap-2">
-                            <MdOutlinePayment className="w-5 h-5" />
-                            Thông tin chuyển khoản
+                    <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 mb-6 flex flex-col items-center gap-4 max-w-sm w-full">
+                        <Hourglass className="w-12 h-12 text-blue-500 animate-spin" />
+                        <p className="font-bold text-blue-900">
+                            Giao dịch đang được xử lý
                         </p>
-                        {successData.qrUrl && (
-                            <div className="mb-4 flex justify-center">
-                                <img
-                                    src={successData.qrUrl}
-                                    alt="QR code chuyển khoản"
-                                    className="w-48 h-48 object-contain rounded-2xl border border-gray-200"
-                                />
-                            </div>
-                        )}
-                        <div className="space-y-1.5 text-sm">
-                            <div className="flex justify-between"><span className="text-gray-500">Ngân hàng:</span><strong>MB Bank</strong></div>
-                            <div className="flex justify-between"><span className="text-gray-500">Số tài khoản:</span><strong>078911111</strong></div>
-                            <div className="flex justify-between"><span className="text-gray-500">Chủ TK:</span><strong>SNACK HUB VN</strong></div>
-                            <div className="flex justify-between"><span className="text-gray-500">Số tiền:</span>
-                                <strong className="text-red-700">{successData.amount ? `${successData.amount.toLocaleString("vi-VN")}đ` : ""}</strong>
-                            </div>
-                            <div className="flex justify-between"><span className="text-gray-500">Nội dung CK:</span>
-                                <strong className="font-mono text-xs">{successData.qrDescription || ""}</strong>
-                            </div>
-                        </div>
                     </div>
                 )}
 
