@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signIn, getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Lock, User } from "lucide-react";
 
 export default function LoginPage() {
@@ -47,11 +48,14 @@ export default function LoginPage() {
         <div className="min-h-screen bg-red-50/50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 pt-24">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="flex justify-center">
-                    <div className="w-20 h-20 flex items-center justify-center rounded-full bg-red-600">
-                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12">
-                            <path d="M8 26c0-5 3-9 8-10.5C17 10 21 7 26 8c5 1 8 5.5 7 10.5 2 .5 4 2.5 4 5.5 0 3-2.5 5-5.5 5H11c-3 0-5-2-5-5 0-2.5 1.5-4.5 3-5z" fill="white" opacity="0.9" />
-                            <path d="M20 19l1.5-4 1.5 4 4-1.5-2.5 3 2.5 3-4-1.5-1.5 4-1.5-4-4 1.5 2.5-3-2.5-3z" fill="#C41230" />
-                        </svg>
+                    <div className="w-20 h-20 flex items-center justify-center rounded-full bg-blue-100">
+                        <Image
+                            src="/logo.png"
+                            alt="SkyFood Logo"
+                            width={44}
+                            height={44}
+                            className="object-contain"
+                        />
                     </div>
                 </div>
                 <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">

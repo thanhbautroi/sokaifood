@@ -7,6 +7,7 @@ import { ScrollReveal, FadeIn } from "@/components/ui/ScrollReveal";
 import ProductCard from "@/components/product/ProductCard";
 import ProductGallery from "@/components/product/ProductGallery";
 import AddToCartButton from "@/components/product/AddToCartButton";
+import ReviewSection from "@/components/product/ReviewSection";
 import dbConnect from "@/lib/mongodb";
 import Product from "@/models/Product";
 
@@ -157,11 +158,11 @@ export default async function ProductDetailPage({ params }: Props) {
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
                     <span
-                      className={`inline-block w-2 h-2 rounded-full ${product.inStock ? "bg-green-500" : "bg-red-500"
+                      className={`inline-block w-2 h-2 rounded-full ${product.quantity > 0 ? "bg-green-500" : "bg-red-500"
                         }`}
                     />
-                    <span className="text-sm text-gray-600">
-                      {product.inStock ? "Còn hàng" : "Hết hàng"}
+                    <span className={`text-sm font-medium ${product.quantity > 0 ? "text-gray-600" : "text-red-600 font-bold"}`}>
+                      {product.quantity > 0 ? "Còn hàng" : "Hết hàng"}
                     </span>
                   </div>
                 </div>
@@ -200,6 +201,10 @@ export default async function ProductDetailPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {/* Related Products */}
+      {/* Reviews Section */}
+      <ReviewSection productId={product._id} />
 
       {/* Related Products */}
       {relatedProducts.length > 0 && (

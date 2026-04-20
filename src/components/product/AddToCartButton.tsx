@@ -46,8 +46,8 @@ export default function AddToCartButton({ product }: { product: Product }) {
 
     const availableStock = typeof product.quantity === "number" ? product.quantity : 0;
     const currentQuantityInCart = items.find((i) => i._id === product._id)?.quantity || 0;
-    const buyNowDisabled = !product.inStock || availableStock <= 0;
-    const addToCartDisabled = !product.inStock || availableStock <= 0;
+    const buyNowDisabled = availableStock <= 0;
+    const addToCartDisabled = availableStock <= 0;
     const buyNowClasses = "flex-1 flex items-center justify-center gap-2 py-4 bg-red-500 text-white rounded-full font-bold text-base transition-all shadow-lg shadow-red-500/30 hover:bg-red-700 hover:shadow-red-500/50 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed";
     const addButtonClasses = addedToCart
         ? "flex-1 flex items-center justify-center gap-2 py-4 rounded-full font-bold text-base transition-all border-2 bg-green-500 border-green-500 text-white shadow-lg shadow-green-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
