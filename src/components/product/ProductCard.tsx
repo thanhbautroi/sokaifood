@@ -52,7 +52,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           {/* Image container */}
           <div className="relative aspect-square w-full overflow-hidden bg-gray-50 flex-shrink-0">
             <Image
-              src={product.images[0]}
+              src={product.images?.[0] || "/kemxinh-mark.svg"}
               alt={product.name}
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
