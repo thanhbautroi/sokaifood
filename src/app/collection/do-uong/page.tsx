@@ -11,6 +11,8 @@ export const metadata: Metadata = {
     description: "Khám phá thêm các món đồ tiện ích và quà tặng được tuyển chọn tại KemXinh.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function DoUongPage() {
     await dbConnect();
     const products = await Product.find({ collectionType: "do-uong" }).lean();

@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description: "Khám phá các mẫu đèn học tiện dụng cho góc học tập và bàn làm việc tại KemXinh.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function DoCayPage() {
   await dbConnect();
   const products = await Product.find({ collectionType: "do-cay" }).lean();

@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description: "Khám phá hoa trang trí tạo điểm nhấn nhẹ nhàng cho bàn làm việc và không gian sống.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function TraiCaySayPage() {
   await dbConnect();
   const products = await Product.find({ collectionType: "trai-cay-say" }).lean();

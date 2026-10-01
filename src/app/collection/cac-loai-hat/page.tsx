@@ -11,6 +11,8 @@ export const metadata: Metadata = {
     description: "Khám phá đồ trang trí giúp căn phòng thêm ấm cúng và thể hiện phong cách riêng.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function CacLoaiHatPage() {
     await dbConnect();
     const products = await Product.find({ collectionType: "cac-loai-hat" }).lean();
