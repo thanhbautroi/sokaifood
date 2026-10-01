@@ -255,10 +255,10 @@ export default function NewProductPage() {
                 onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-accent"
               >
-                <option value="do-cay">Đồ Cay</option>
-                <option value="trai-cay-say">Trái Cây Sấy</option>
-                <option value="cac-loai-hat">Các Loại Hạt</option>
-                <option value="do-uong">Đồ Uống</option>
+                <option value="do-cay">Đèn học</option>
+                <option value="trai-cay-say">Hoa</option>
+                <option value="cac-loai-hat">Đồ trang trí</option>
+                <option value="do-uong">Khác</option>
               </select>
             </div>
 

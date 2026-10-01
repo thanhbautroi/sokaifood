@@ -12,10 +12,10 @@ import dbConnect from "@/lib/mongodb";
 import Product from "@/models/Product";
 
 const COLLECTION_LABELS: Record<string, string> = {
-  "do-cay": "Đồ Cay Nội Địa",
-  "trai-cay-say": "Trái Cây Sấy",
-  "cac-loai-hat": "Hạt Dinh Dưỡng",
-  "do-uong": "Đồ Uống Giải Khát",
+  "do-cay": "Đèn học",
+  "trai-cay-say": "Hoa",
+  "cac-loai-hat": "Đồ trang trí",
+  "do-uong": "Khác",
 };
 
 type Props = {
@@ -180,7 +180,7 @@ export default async function ProductDetailPage({ params }: Props) {
                   <ul className="space-y-2 text-sm text-gray-600">
                     <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 bg-red-500 rounded-full" />
-                      Đảm bảo An toàn Vệ sinh thực phẩm
+                      Thông tin sản phẩm rõ ràng
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 bg-red-500 rounded-full" />

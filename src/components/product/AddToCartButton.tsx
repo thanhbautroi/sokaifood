@@ -139,7 +139,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
                         name: product.name,
                         price: product.price,
                         quantity: 1,
-                        image: product.images?.[0] || "/logo.png",
+                        image: product.images?.[0] || "/kemxinh-mark.svg",
                     }],
                     totalAmount: product.price,
                     guestInfo: {
@@ -342,7 +342,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
                                     </div>
                                     <h3 className="text-2xl font-bold text-gray-900 mb-2">Đặt hàng thành công!</h3>
                                     <p className="text-gray-500 text-sm mb-6">
-                                        Cảm ơn <strong>{guestForm.name}</strong>! Skyfood sẽ liên hệ số{" "}
+                                        Cảm ơn <strong>{guestForm.name}</strong>! KemXinh sẽ liên hệ số{" "}
                                         <strong>{guestForm.phone}</strong> để xác nhận đơn nhé.
                                     </p>
                                     <button

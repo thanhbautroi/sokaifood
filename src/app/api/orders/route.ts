@@ -33,7 +33,7 @@ export async function POST(req: Request) {
                 name: item.name,
                 price: item.price,
                 quantity: item.quantity,
-                image: item.image || "/logo.png",
+                image: item.image || "/kemxinh-mark.svg",
             };
         });
 

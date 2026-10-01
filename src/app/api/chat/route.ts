@@ -17,30 +17,30 @@ export async function POST(request: NextRequest) {
     const productContext = products
       .map(
         (p) =>
-          `- ${p.name} (Slug: ${p.slug}): ${p.description}. Giá: ${p.price.toLocaleString("vi-VN")}đ. Phân loại: ${p.collectionType === "do-cay" ? "Đồ Cay Nội Địa" : p.collectionType === "trai-cay-say" ? "Trái Cây Sấy" : p.collectionType === "cac-loai-hat" ? "Hạt Dinh Dưỡng" : "Đồ Uống Giải Khát"}`
+          `- ${p.name} (Slug: ${p.slug}): ${p.description}. Giá: ${p.price.toLocaleString("vi-VN")}đ. Phân loại: ${p.collectionType === "do-cay" ? "Đèn học" : p.collectionType === "trai-cay-say" ? "Hoa" : p.collectionType === "cac-loai-hat" ? "Đồ trang trí" : "Khác"}`
       )
       .join("\n");
 
-    const systemPrompt = `Bạn là trợ lý AI thông minh của SkyFood - thế giới đồ ăn vặt siêu cuốn hút.
+    const systemPrompt = `Bạn là trợ lý mua sắm thân thiện của KemXinh, cửa hàng đèn học, hoa trang trí, đồ decor và các sản phẩm tiện ích.
 
 DANH SÁCH SẢN PHẨM:
 ${productContext}
 
 NHIỆM VỤ:
-1. Tư vấn và gợi ý món ăn vặt phù hợp với khẩu vị hoặc hoàn cảnh của khách (ví dụ: cày phim, nhậu nhẹt, ăn kiêng).
-2. Trả lời câu hỏi về thành phần, vị cay, độ ngọt, khối lượng, giá tiền.
+1. Tư vấn sản phẩm phù hợp với nhu cầu, không gian và phong cách khách mô tả.
+2. Trả lời câu hỏi về công dụng, chất liệu, kích thước, màu sắc và giá; chỉ nêu thông tin có trong danh sách sản phẩm.
 3. Hướng dẫn thêm vào giỏ hàng hoặc check-out.
 
 QUY TẮC:
-- Cực kỳ thân thiện, dùng từ ngữ giới trẻ hoặc vui nhộn (mlem mlem, cuốn, dính, cháy phố) (dưới 3 câu).
+- Thân thiện, rõ ràng và súc tích (dưới 3 câu).
 - Khi khách hỏi tìm món gì, PHẢI gợi ý sản phẩm và chèn thêm block JSON chính xác có từ khóa \`slug\` trong danh sách vào CUỐI câu.
 - Cú pháp JSON BẮT BUỘC: {"products": [{"slug": "..."}]}
 - Chỉ được lấy slug từ Danh sách sản phẩm bạn được cung cấp. Tuyệt đối không tự bịa slug mới.
 - Kết thúc luôn là 1 câu hỏi để giữ tương tác với khách.
 
 VÍ DỤ:
-User: "Nay buồn miệng quá có gì nhai ngon không"
-Response: "Dạ Skyfood đang có mấy món siêu bánh cuốn giòn giòn nhai rôm rốp luôn ạ! Bạn thích đồ siêu cay hay hạt dinh dưỡng béo bùi hả bạn? {"products": [{"slug": "xoai-say-deo"}, {"slug": "chan-ga-cay-tu-xuyen"}]}"`;
+User: "Mình cần món gì cho góc học tập"
+Response: "Mình có thể gợi ý một vài sản phẩm phù hợp cho góc học tập của bạn. Bạn ưu tiên ánh sáng, trang trí hay tối ưu diện tích? {"products": [{"slug": "slug-trong-danh-sach"}]}"`;
 
     const response = await fetch(GROQ_API_URL, {
       method: "POST",

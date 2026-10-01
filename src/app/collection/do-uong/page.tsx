@@ -7,8 +7,8 @@ import dbConnect from "@/lib/mongodb";
 import Product from "@/models/Product";
 
 export const metadata: Metadata = {
-    title: "Đồ Uống",
-    description: "Trà sữa, nước ép, Kombucha và các loại đồ uống thơm mát tuyệt vời tại Skyfood",
+    title: "Sản phẩm khác",
+    description: "Khám phá thêm các món đồ tiện ích và quà tặng được tuyển chọn tại KemXinh.",
 };
 
 export default async function DoUongPage() {
@@ -34,7 +34,7 @@ export default async function DoUongPage() {
                     <div className="flex items-center gap-2 text-sm text-gray-600">
                         <Link href="/" className="hover:text-red-500 transition-colors">Trang chủ</Link>
                         <ChevronRight className="w-4 h-4" />
-                        <span className="text-red-700 font-medium">Đồ Uống</span>
+                        <span className="text-red-700 font-medium">Khác</span>
                     </div>
                 </div>
             </div>
@@ -43,10 +43,10 @@ export default async function DoUongPage() {
                 <div className="container mx-auto px-6">
                     <ScrollReveal>
                         <div className="max-w-3xl">
-                            <p className="text-red-500 text-sm font-bold tracking-[0.2em] uppercase mb-4">Giải Khát Cực Phẩm</p>
-                            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Đồ Uống Sảng Khoái</h1>
+                            <p className="text-red-500 text-sm font-bold tracking-[0.2em] uppercase mb-4">Thêm lựa chọn cho bạn</p>
+                            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Sản phẩm tiện ích</h1>
                             <p className="text-lg text-gray-600 leading-relaxed">
-                                Trà sữa trân châu, nước ép tươi, Kombucha lên men tự nhiên — xua tan cơn khát và tiếp thêm năng lượng.
+                                Khám phá thêm các sản phẩm hữu ích, món quà nhỏ và phụ kiện phù hợp với nhu cầu hằng ngày.
                             </p>
                         </div>
                     </ScrollReveal>

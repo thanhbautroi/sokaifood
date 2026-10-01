@@ -25,32 +25,32 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "SkyFood | Thiên đường đồ ăn vặt",
-    template: "%s | SkyFood",
+    default: "KemXinh | Đèn học, hoa và đồ trang trí",
+    template: "%s | KemXinh",
   },
   description:
-    "SkyFood - Nền tảng phân phối đồ ăn vặt hàng đầu. Khám phá hàng ngàn món ăn vặt mlem mlem như đồ cay nội địa, trái cây sấy, các loại hạt dinh dưỡng và nước giải khát.",
+    "Khám phá đèn học, hoa trang trí, đồ decor và những món đồ tiện ích giúp không gian sống thêm đẹp, tiện nghi và mang dấu ấn riêng.",
   keywords: [
-    "đồ ăn vặt",
-    "đồ ăn vặt nội địa trung",
-    "snack",
-    "trái cây sấy",
-    "các loại hạt",
-    "nước ngọt",
-    "ăn vặt văn phòng",
-    "snack hub",
+    "đèn học",
+    "hoa trang trí",
+    "đồ trang trí",
+    "đồ decor",
+    "phụ kiện nhà cửa",
+    "góc học tập",
+    "trang trí nhà cửa",
+    "đồ dùng tiện ích",
   ],
-  authors: [{ name: "SkyFood Team" }],
+  authors: [{ name: "KemXinh" }],
   icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+    icon: "/kemxinh-mark.svg",
+    apple: "/kemxinh-mark.svg",
   },
   openGraph: {
     type: "website",
     locale: "vi_VN",
-    title: "SkyFood | Thiên đường đồ ăn vặt",
-    description: "Khám phá các món ăn vặt ngon tuyệt đỉnh tại SkyFood",
-    siteName: "SkyFood",
+    title: "KemXinh | Đèn học, hoa và đồ trang trí",
+    description: "Khám phá các món đồ tiện dụng và trang trí cho góc học tập, bàn làm việc và ngôi nhà tại KemXinh.",
+    siteName: "KemXinh",
   },
 };
 

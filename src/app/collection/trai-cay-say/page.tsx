@@ -7,8 +7,8 @@ import dbConnect from "@/lib/mongodb";
 import Product from "@/models/Product";
 
 export const metadata: Metadata = {
-  title: "Trái Cây Sấy",
-  description: "Khám phá bộ sưu tập trái cây sấy tươi ngon, giữ nguyên hương vị tự nhiên tại Skyfood",
+  title: "Hoa trang trí",
+  description: "Khám phá hoa trang trí tạo điểm nhấn nhẹ nhàng cho bàn làm việc và không gian sống.",
 };
 
 export default async function TraiCaySayPage() {
@@ -34,7 +34,7 @@ export default async function TraiCaySayPage() {
           <div className="flex items-center gap-2 text-sm text-gray-600">
             <Link href="/" className="hover:text-red-500 transition-colors">Trang chủ</Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-red-700 font-medium">Trái Cây Sấy</span>
+            <span className="text-red-700 font-medium">Hoa</span>
           </div>
         </div>
       </div>
@@ -43,10 +43,10 @@ export default async function TraiCaySayPage() {
         <div className="container mx-auto px-6">
           <ScrollReveal>
             <div className="max-w-3xl">
-              <p className="text-red-500 text-sm font-bold tracking-[0.2em] uppercase mb-4">Tự Nhiên Nguyên Bản</p>
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Trái Cây Sấy Ngon</h1>
+              <p className="text-red-500 text-sm font-bold tracking-[0.2em] uppercase mb-4">Sắc màu cho góc nhỏ</p>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Hoa trang trí</h1>
               <p className="text-lg text-gray-600 leading-relaxed">
-                Giòn rụm, giữ nguyên vị ngọt tự nhiên. Snack lành mạnh, tốt cho sức khỏe mà vẫn cực kỳ thơm ngon.
+                Tạo điểm nhấn tươi tắn cho phòng khách, bàn làm việc hoặc dành tặng người bạn yêu quý.
               </p>
             </div>
           </ScrollReveal>

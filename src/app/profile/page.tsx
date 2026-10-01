@@ -141,7 +141,7 @@ export default function ProfilePage() {
                         </div>
                         <div>
                             <p className="font-semibold text-gray-900 text-sm">{session?.user?.name}</p>
-                            <p className="text-xs text-gray-400">Thành viên Skyfood</p>
+                            <p className="text-xs text-gray-400">Thành viên KemXinh</p>
                         </div>
                     </div>
                 </div>

@@ -11,10 +11,10 @@ import { useCartStore } from "@/store/useCartStore";
 
 const navLinks = [
   { name: "Trang chủ", href: "/" },
-  { name: "Đồ cay", href: "/collection/do-cay" },
-  { name: "Trái cây sấy", href: "/collection/trai-cay-say" },
-  { name: "Các loại hạt", href: "/collection/cac-loai-hat" },
-  { name: "Đồ uống", href: "/collection/do-uong" },
+  { name: "Đèn học", href: "/collection/do-cay" },
+  { name: "Hoa", href: "/collection/trai-cay-say" },
+  { name: "Đồ trang trí", href: "/collection/cac-loai-hat" },
+  { name: "Khác", href: "/collection/do-uong" },
   { name: "Đơn hàng", href: "/orders" },
   { name: "Liên hệ", href: "/contact" },
 ];
@@ -73,14 +73,14 @@ export default function Header() {
           <Link href="/" className="flex items-center cursor-pointer group z-10">
             <div className="relative w-11 h-11 flex-shrink-0 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center rounded-full bg-blue-100 overflow-hidden">
               <Image
-                src="/logo.png"
-                alt="SkyFood Logo"
+                src="/kemxinh-mark.svg"
+                alt="KemXinh"
                 width={28}
                 height={28}
                 className="object-contain"
               />
             </div>
-            <span className="ml-2 font-black text-2xl text-red-600 tracking-tight">Sky<span className="text-gray-700">Food</span></span>
+            <span className="ml-2 font-black text-2xl text-red-600 tracking-tight">Kem<span className="text-gray-700">Xinh</span></span>
           </Link>
 
           {/* Desktop Navigation */}

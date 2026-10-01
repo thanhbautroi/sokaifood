@@ -7,8 +7,8 @@ import dbConnect from "@/lib/mongodb";
 import Product from "@/models/Product";
 
 export const metadata: Metadata = {
-    title: "Hạt Dinh Dưỡng",
-    description: "Các loại hạt dinh dưỡng cao cấp, tốt cho sức khỏe tại Skyfood",
+    title: "Đồ trang trí",
+    description: "Khám phá đồ trang trí giúp căn phòng thêm ấm cúng và thể hiện phong cách riêng.",
 };
 
 export default async function CacLoaiHatPage() {
@@ -34,7 +34,7 @@ export default async function CacLoaiHatPage() {
                     <div className="flex items-center gap-2 text-sm text-gray-600">
                         <Link href="/" className="hover:text-red-500 transition-colors">Trang chủ</Link>
                         <ChevronRight className="w-4 h-4" />
-                        <span className="text-red-700 font-medium">Hạt Dinh Dưỡng</span>
+                        <span className="text-red-700 font-medium">Đồ trang trí</span>
                     </div>
                 </div>
             </div>
@@ -43,10 +43,10 @@ export default async function CacLoaiHatPage() {
                 <div className="container mx-auto px-6">
                     <ScrollReveal>
                         <div className="max-w-3xl">
-                            <p className="text-red-500 text-sm font-bold tracking-[0.2em] uppercase mb-4">Bùi Béo Thơm Ngon</p>
-                            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Hạt Dinh Dưỡng Cao Cấp</h1>
+                            <p className="text-red-500 text-sm font-bold tracking-[0.2em] uppercase mb-4">Tạo dấu ấn riêng</p>
+                            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Đồ trang trí nhà cửa</h1>
                             <p className="text-lg text-gray-600 leading-relaxed">
-                                Macca, điều, dẻ cười, hạt hướng dương — bùi béo thơm ngon, giàu dinh dưỡng cho cả ngày tràn đầy sức sống.
+                                Những món decor được chọn để làm mới góc làm việc, phòng ngủ và các khoảng nhỏ trong ngôi nhà.
                             </p>
                         </div>
                     </ScrollReveal>

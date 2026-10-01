@@ -30,17 +30,17 @@ export default async function FeaturedProducts() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-6">
           <div className="max-w-xl">
             <span className="text-xs tracking-[0.3em] uppercase text-red-500 font-bold bg-red-100 px-3 py-1.5 rounded-full mb-4 inline-block">
-              Sản phẩm đỉnh chóp
+              Được tuyển chọn
             </span>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight pt-2">
-              Bán chạy nhất tuần
+              Sản phẩm nổi bật
             </h2>
           </div>
           <Link
             href="/collection/do-cay"
             className="inline-flex items-center gap-2 text-red-700 font-bold hover:text-red-800 transition-colors group"
           >
-            Xem tất cả đồ cay
+            Xem tất cả đèn học
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>

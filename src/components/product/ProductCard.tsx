@@ -22,10 +22,10 @@ interface ProductCardProps {
 }
 
 const COLLECTION_LABELS: Record<string, string> = {
-  "do-cay": "Đồ Cay",
-  "trai-cay-say": "Trái Cây Sấy",
-  "cac-loai-hat": "Hạt Dinh Dưỡng",
-  "do-uong": "Đồ Uống",
+  "do-cay": "Đèn học",
+  "trai-cay-say": "Hoa",
+  "cac-loai-hat": "Đồ trang trí",
+  "do-uong": "Khác",
 };
 
 export default function ProductCard({ product }: ProductCardProps) {

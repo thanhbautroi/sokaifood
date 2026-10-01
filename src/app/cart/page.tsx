@@ -21,7 +21,7 @@ export default function CartPage() {
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">Giỏ hàng của bạn đang trống</h2>
                 <p className="text-gray-500 mb-8 max-w-sm">
-                    Có vẻ như bạn chưa chọn món đồ ăn vặt nào. Khám phá ngay hàng ngàn món ngon tại Skyfood!
+                    Bạn chưa thêm sản phẩm nào vào giỏ. Khám phá đèn học, hoa và đồ trang trí tại KemXinh nhé!
                 </p>
                 <Link
                     href="/"

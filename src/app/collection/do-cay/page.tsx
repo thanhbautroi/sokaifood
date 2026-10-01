@@ -7,8 +7,8 @@ import dbConnect from "@/lib/mongodb";
 import Product from "@/models/Product";
 
 export const metadata: Metadata = {
-  title: "Đồ Cay Nội Địa",
-  description: "Khám phá bộ sưu tập đồ cay nội địa siêu cuốn, siêu dính tại Skyfood",
+  title: "Đèn học",
+  description: "Khám phá các mẫu đèn học tiện dụng cho góc học tập và bàn làm việc tại KemXinh.",
 };
 
 export default async function DoCayPage() {
@@ -34,7 +34,7 @@ export default async function DoCayPage() {
           <div className="flex items-center gap-2 text-sm text-gray-600">
             <Link href="/" className="hover:text-red-500 transition-colors">Trang chủ</Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-red-700 font-medium">Đồ Cay Nội Địa</span>
+            <span className="text-red-700 font-medium">Đèn học</span>
           </div>
         </div>
       </div>
@@ -43,10 +43,10 @@ export default async function DoCayPage() {
         <div className="container mx-auto px-6">
           <ScrollReveal>
             <div className="max-w-3xl">
-              <p className="text-red-500 text-sm font-bold tracking-[0.2em] uppercase mb-4">Cay Xé Lưỡi</p>
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Đồ Cay Nội Địa Trung</h1>
+              <p className="text-red-500 text-sm font-bold tracking-[0.2em] uppercase mb-4">Góc học tập chỉn chu</p>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Đèn học tiện dụng</h1>
               <p className="text-lg text-gray-600 leading-relaxed">
-                Thiên đường của những tín đồ ăn cay. Chân gà, que cay, mỳ cay tẩm vị đậm đà, càng ăn càng cuốn.
+                Lựa chọn đèn học phù hợp giúp bàn học gọn gàng, đủ sáng và tạo cảm hứng tập trung mỗi ngày.
               </p>
             </div>
           </ScrollReveal>

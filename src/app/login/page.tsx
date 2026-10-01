@@ -50,8 +50,8 @@ export default function LoginPage() {
                 <div className="flex justify-center">
                     <div className="w-20 h-20 flex items-center justify-center rounded-full bg-blue-100">
                         <Image
-                            src="/logo.png"
-                            alt="SkyFood Logo"
+                            src="/kemxinh-mark.svg"
+                            alt="KemXinh"
                             width={44}
                             height={44}
                             className="object-contain"
@@ -59,7 +59,7 @@ export default function LoginPage() {
                     </div>
                 </div>
                 <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-                    Đăng nhập SkyFood
+                    Đăng nhập KemXinh
                 </h2>
                 <p className="mt-2 text-center text-sm text-gray-600">
                     Chưa có tài khoản?{" "}

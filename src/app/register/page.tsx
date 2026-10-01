@@ -54,8 +54,8 @@ export default function RegisterPage() {
                 <div className="flex justify-center">
                     <div className="relative w-20 h-20 flex items-center justify-center rounded-full bg-blue-100 overflow-hidden">
                         <Image
-                            src="/logo.png"
-                            alt="SkyFood Logo"
+                            src="/kemxinh-mark.svg"
+                            alt="KemXinh"
                             fill
                             className="object-contain"
                         />

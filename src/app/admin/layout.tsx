@@ -67,7 +67,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div className="min-h-screen bg-gray-100 flex flex-col" style={{ paddingTop: 0 }}>
       {/* Admin top bar */}
       <header className="fixed top-0 left-0 right-0 z-[999] h-14 bg-slate-950 border-b border-slate-800 flex items-center px-6 gap-3">
-        <span className="text-red-400 font-black text-lg tracking-tight">Skyfood</span>
+        <span className="text-red-400 font-black text-lg tracking-tight">KemXinh</span>
         <span className="text-slate-500 text-xs bg-slate-800 px-2 py-0.5 rounded-full">Admin</span>
         <div className="ml-auto flex items-center gap-4">
           <NotificationBell />

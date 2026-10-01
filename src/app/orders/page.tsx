@@ -79,7 +79,7 @@ export default function UserOrdersPage() {
                 <div className="bg-white rounded-2xl border border-gray-100 p-12 text-center shadow-sm">
                     <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                     <h3 className="text-xl font-bold text-gray-900 mb-2">Chưa có đơn hàng nào</h3>
-                    <p className="text-gray-500 mb-6">Bạn chưa đặt món ăn vặt nào từ Skyfood. Khám phá ngay!</p>
+                    <p className="text-gray-500 mb-6">Bạn chưa có đơn hàng tại KemXinh. Khám phá các sản phẩm và chọn món yêu thích nhé!</p>
                     <Link href="/" className="inline-block bg-red-50 text-red-700 px-6 py-2.5 rounded-full font-bold hover:bg-red-100 transition-colors">Bắt đầu mua sắm</Link>
                 </div>
             ) : (

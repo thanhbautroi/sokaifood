@@ -56,10 +56,10 @@ export default function ContactPage() {
                     <div className="lg:col-span-2 space-y-4">
                         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                             <div className="relative w-24 h-24 flex items-center justify-center rounded-full bg-blue-100 overflow-hidden mb-6">
-                            <Image src="/logo.png" alt="SkyFood Logo" fill className="object-contain" />
+                            <Image src="/kemxinh-mark.svg" alt="KemXinh" fill className="object-contain" />
                         </div>
                             <p className="text-gray-500 text-sm leading-relaxed mb-6">
-                                SkyFood — thiên đường đồ ăn vặt lớn nhất. Chúng tôi cam kết an toàn vệ sinh thực phẩm và giao hàng siêu tốc.
+                                KemXinh — lựa chọn đèn học, hoa và đồ trang trí cho góc học tập, bàn làm việc và ngôi nhà của bạn.
                             </p>
                             <div className="space-y-4">
                                 {[

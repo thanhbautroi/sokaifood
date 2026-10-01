@@ -10,13 +10,13 @@ export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section ref={containerRef} className="relative min-h-screen flex items-center overflow-hidden bg-white pt-32 pb-20">
-      {/* Background với ảnh đồ ăn vặt */}
+    <section ref={containerRef} className="relative min-h-[72vh] md:min-h-[78vh] flex items-center overflow-hidden bg-white pt-24 pb-12 md:pt-28 md:pb-16">
+      {/* Product imagery */}
       <div className="absolute right-0 top-0 w-[55%] h-full">
         <div className="relative w-full h-full">
           <Image
-            src="https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&q=80&w=2671&ixlib=rb-4.0.3"
-            alt="Đồ Ăn Vặt Skyfood"
+            src="/images/banner.jpg"
+            alt="Hoa trang trí cho không gian sống"
             fill
             className="object-cover object-center"
             priority
@@ -40,7 +40,7 @@ export default function Hero() {
             className="inline-block mb-8"
           >
             <span className="text-xs tracking-[0.3em] uppercase text-red-500 font-bold bg-red-100 px-3 py-1.5 rounded-full">
-              Khám Phá Hương Vị
+              Làm mới không gian sống
             </span>
           </motion.div>
 
@@ -52,11 +52,11 @@ export default function Hero() {
             className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 tracking-tight"
             style={{ lineHeight: 1.1 }}
           >
-            Thế giới
+            Điểm tô
             <br />
-            <span className="text-red-500 italic">đồ ăn vặt</span> siêu
+            <span className="text-red-500 italic">không gian</span> theo
             <br />
-            cuốn hút
+            cách riêng
           </motion.h1>
 
           {/* Description */}
@@ -67,7 +67,7 @@ export default function Hero() {
             className="text-lg text-gray-600 mb-10 max-w-md"
             style={{ lineHeight: 1.7 }}
           >
-            Đánh thức vị giác của bạn với hàng ngàn món ăn vặt mlem mlem, chuẩn vị, ship siêu tốc.
+            Khám phá đèn học tiện dụng, hoa trang trí và những món decor giúp góc nhỏ thêm cảm hứng.
           </motion.p>
 
           {/* CTA */}
@@ -81,11 +81,11 @@ export default function Hero() {
               href="/collection/do-cay"
               className="group inline-flex items-center gap-3 px-8 py-4 bg-red-500 text-white font-bold rounded-xl shadow-lg hover:shadow-red-500/30 hover:-translate-y-1 transition-all"
             >
-              Đặt hàng ngay
+              Khám phá sản phẩm
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
-              href="/collection/trai-cay-say"
+              href="/collection/cac-loai-hat"
               className="inline-flex items-center gap-3 px-8 py-4 border-2 border-red-500 text-red-700 font-bold rounded-xl hover:bg-red-50 hover:shadow-lg transition-all"
             >
               Xem danh mục
@@ -100,16 +100,16 @@ export default function Hero() {
             className="mt-20 flex gap-8 md:gap-12"
           >
             <div>
-              <div className="text-4xl font-black text-gray-900 mb-1">500+</div>
-              <div className="text-sm text-gray-500 font-medium">Món ăn vặt</div>
+              <div className="text-4xl font-black text-gray-900 mb-1">04</div>
+              <div className="text-sm text-gray-500 font-medium">Danh mục sản phẩm</div>
             </div>
             <div>
-              <div className="text-4xl font-black text-gray-900 mb-1">10k+</div>
-              <div className="text-sm text-gray-500 font-medium">Khách hàng</div>
+              <div className="text-4xl font-black text-gray-900 mb-1">Xinh</div>
+              <div className="text-sm text-gray-500 font-medium">Cho mọi góc nhà</div>
             </div>
             <div>
-              <div className="text-4xl font-black text-red-500 mb-1">4.9</div>
-              <div className="text-sm text-gray-500 font-medium">Đánh giá</div>
+              <div className="text-4xl font-black text-red-500 mb-1">Chọn</div>
+              <div className="text-sm text-gray-500 font-medium">Theo gu của bạn</div>
             </div>
           </motion.div>
         </div>

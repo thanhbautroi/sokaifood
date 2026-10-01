@@ -21,8 +21,8 @@ export default function BrandIntro() {
           >
             <div className="relative aspect-[3/4] lg:ml-12 rounded-2xl overflow-hidden shadow-2xl">
               <Image
-                src="https://minhnguyenfood.vn/uploads/source/tin-tuc/269686919-431435252017258-8051846614270916793-n.jpg"
-                alt="Skyfood Tinh Hoa Đồ Ăn Vặt"
+                src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&q=85&w=1200"
+                alt="Hoa trang trí cho không gian sống"
                 fill
                 className="object-cover"
               />
@@ -41,42 +41,42 @@ export default function BrandIntro() {
           >
             <div>
               <span className="text-xs tracking-[0.3em] uppercase text-red-500 font-bold bg-red-100 px-3 py-1.5 rounded-full">
-                Về Skyfood
+                Về KemXinh
               </span>
             </div>
 
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight tracking-tight">
-              Tuyển chọn
+              Chọn món
               <br />
-              hương vị
+              điểm tô
               <br />
-              <span className="text-red-500 italic">đỉnh cao</span>
+              <span className="text-red-500 italic">góc riêng</span>
             </h2>
 
             <div className="space-y-4 text-gray-600 leading-relaxed text-lg">
               <p>
-                Skyfood tự hào là điểm đến lý tưởng cho những tín đồ đam mê ẩm thực ăn vặt.
-                Chúng tôi liên tục chọn lọc những món ăn vặt hot nhất, ngon nhất từ khắp mọi nơi.
+                KemXinh mang đến những món đồ hữu ích và giàu cảm hứng cho góc học tập, bàn làm việc và ngôi nhà của bạn.
+                Từ đèn học, hoa trang trí đến các món decor, mỗi lựa chọn đều giúp không gian thêm dấu ấn riêng.
               </p>
               <p>
-                Với tiêu chí an toàn vệ sinh thực phẩm lên hàng đầu, mọi sản phẩm tại
-                Skyfood đều có nguồn gốc rõ ràng, date mới, đảm bảo độ giòn ngon và trọn vị.
+                Chúng tôi ưu tiên sản phẩm có thông tin rõ ràng, thiết kế đẹp và tiện dụng để bạn dễ dàng chọn món phù hợp.
+                Cần thêm gợi ý? Đội ngũ KemXinh luôn sẵn sàng hỗ trợ bạn.
               </p>
             </div>
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-8 pt-8 border-t border-gray-100 mt-8">
               <div>
-                <div className="text-3xl font-black text-gray-900 mb-1">100%</div>
-                <div className="text-sm text-gray-500 font-medium">Chính hãng</div>
+                <div className="text-3xl font-black text-gray-900 mb-1">Đẹp</div>
+                <div className="text-sm text-gray-500 font-medium">Chọn theo gu</div>
               </div>
               <div>
-                <div className="text-3xl font-black text-gray-900 mb-1">Giao</div>
-                <div className="text-sm text-gray-500 font-medium">Siêu tốc 2h</div>
+                <div className="text-3xl font-black text-gray-900 mb-1">Tiện</div>
+                <div className="text-sm text-gray-500 font-medium">Dễ dàng đặt mua</div>
               </div>
               <div>
-                <div className="text-3xl font-black text-red-500 mb-1">Date</div>
-                <div className="text-sm text-gray-500 font-medium">Luôn mới</div>
+                <div className="text-3xl font-black text-red-500 mb-1">Gu</div>
+                <div className="text-sm text-gray-500 font-medium">Cho mọi không gian</div>
               </div>
             </div>
           </motion.div>

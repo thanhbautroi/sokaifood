@@ -28,7 +28,7 @@ export default function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      text: "Xin chào! Mình là AI của SkyFood.\n\nBạn đang thèm ăn vặt gì? Cứ mô tả cho mình biết nhé, mình sẽ gợi ý món ngon nha!",
+      text: "Xin chào! Mình là trợ lý mua sắm của KemXinh.\n\nBạn đang tìm đèn học, hoa hay món đồ trang trí nào? Mô tả nhu cầu để mình gợi ý nhé!",
       isBot: true,
       timestamp: new Date(),
     },
@@ -92,11 +92,11 @@ export default function ChatBot() {
   };
 
   const quickReplies = [
-    "Đồ cay nồng",
-    "Trái cây sấy dẻo",
-    "Hạt dinh dưỡng",
-    "Chân gà cay",
-    "Đồ uống giải khát",
+    "Đèn học cho bàn nhỏ",
+    "Hoa trang trí",
+    "Đồ decor phòng ngủ",
+    "Quà tặng xinh xắn",
+    "Đồ dùng tiện ích",
   ];
 
   return (
@@ -153,7 +153,7 @@ export default function ChatBot() {
             <div className="p-4 bg-gradient-to-r from-red-500 to-red-400 text-white">
               <div>
                 <h3 className="font-bold mb-1">
-                  SkyFood AI
+                  KemXinh AI
                 </h3>
                 <p className="text-xs text-white/80 flex items-center gap-1">
                   <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
@@ -173,7 +173,7 @@ export default function ChatBot() {
                     {msg.isBot && (
                       <div className="flex items-center gap-2 mb-1">
                         <Hand className="w-3 h-3 text-red-500" />
-                        <span className="text-xs text-gray-500 font-medium">SkyFood AI</span>
+                        <span className="text-xs text-gray-500 font-medium">KemXinh AI</span>
                       </div>
                     )}
                     <div

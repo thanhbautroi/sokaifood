@@ -8,30 +8,30 @@ import { ArrowRight } from "lucide-react";
 const collections = [
   {
     id: "do-cay",
-    name: "Đồ Cay Nội Địa",
-    description: "Cay nồng, đậm vị, kích thích mọi giác quan. Ăn là ghiền!",
-    image: "https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?w=800",
+    name: "Đèn học",
+    description: "Ánh sáng tiện dụng, giúp góc học tập và làm việc thêm gọn gàng, dễ chịu.",
+    image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&q=85&w=900",
     href: "/collection/do-cay",
   },
   {
     id: "trai-cay-say",
-    name: "Trái Cây Sấy",
-    description: "Giòn rụm, giữ nguyên vị ngọt tự nhiên, nhâm nhi cả ngày không chán",
-    image: "https://images.unsplash.com/photo-1525755662778-989d0524087e?w=800",
+    name: "Hoa",
+    description: "Thêm sắc màu và nét mềm mại cho bàn làm việc, phòng khách hay món quà nhỏ.",
+    image: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&q=85&w=900",
     href: "/collection/trai-cay-say",
   },
   {
     id: "cac-loai-hat",
-    name: "Hạt Dinh Dưỡng",
-    description: "Bùi béo, thơm ngon, tốt cho sức khỏe. Phù hợp ăn kiêng, ăn vặt",
-    image: "https://images.unsplash.com/photo-1596591606975-97ee5cef3a1e?w=800",
+    name: "Đồ trang trí",
+    description: "Những điểm nhấn xinh xắn để căn phòng mang đậm dấu ấn của bạn.",
+    image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=85&w=900",
     href: "/collection/cac-loai-hat",
   },
   {
     id: "do-uong",
-    name: "Giải Khát Đỉnh",
-    description: "Nước ép, trà sữa, kombucha tươi mát xua tan cơn khát tức thì",
-    image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=800",
+    name: "Khác",
+    description: "Khám phá thêm những món đồ tiện ích và quà tặng cho cuộc sống hằng ngày.",
+    image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=85&w=900",
     href: "/collection/do-uong",
   },
 ];
@@ -51,10 +51,10 @@ export default function CollectionsPreview() {
               Danh mục
             </span>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight pt-2">
-              Ăn vặt cực đã tẹt ga
+              Hoàn thiện không gian sống
             </h2>
             <p className="text-gray-600 text-lg">
-              Đa dạng các loại snack phù hợp cho mọi lứa tuổi và sở thích
+              Từ góc học tập đến căn nhà thân yêu, tìm món đồ hợp nhu cầu và phong cách của bạn.
             </p>
           </motion.div>
         </div>
