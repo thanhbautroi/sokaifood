@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone, ShoppingBag, User } from "lucide-react";
+import { LayoutDashboard, Menu, X, Phone, ShoppingBag, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSession, signOut } from "next-auth/react";
 import { useCartStore } from "@/store/useCartStore";
@@ -71,7 +71,7 @@ export default function Header() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center cursor-pointer group z-10">
-            <div className="relative w-9 h-9 md:w-11 md:h-11 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+            <div className="relative w-9 h-9 md:w-11 md:h-11 shrink-0 group-hover:scale-110 transition-transform duration-300">
               <Image
                 src="/images/v-light-logo.png"
                 alt="V-LIGHT"
@@ -92,7 +92,7 @@ export default function Header() {
                 className="text-sm font-bold text-gray-700 transition-all hover:text-red-500 relative group"
               >
                 {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-[3px] rounded-full bg-red-500 transition-all group-hover:w-full" />
+                <span className="absolute -bottom-1 left-0 w-0 h-0.75 rounded-full bg-red-500 transition-all group-hover:w-full" />
               </Link>
             ))}
           </nav>
@@ -212,16 +212,36 @@ export default function Header() {
                     <span className="text-xs">Giỏ hàng</span>
                   </Link>
                   {session ? (
-                    <button
-                      onClick={() => {
-                        signOut();
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className="flex flex-col items-center justify-center gap-1 py-3 bg-red-50 text-red-600 rounded-xl font-bold hover:bg-red-100 transition-all"
-                    >
-                      <X className="w-5 h-5" />
-                      <span className="text-xs">Đăng xuất</span>
-                    </button>
+                    <>
+                      {(session.user as any)?.role === "admin" && (
+                        <Link
+                          href="/admin"
+                          className="flex flex-col items-center justify-center gap-1 py-3 bg-red-50 text-red-700 rounded-xl font-bold hover:bg-red-100 transition-all"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          <LayoutDashboard className="w-5 h-5" />
+                          <span className="text-xs">Quản trị hệ thống</span>
+                        </Link>
+                      )}
+                      <Link
+                        href="/profile"
+                        className="flex flex-col items-center justify-center gap-1 py-3 bg-gray-100 text-gray-800 rounded-xl font-bold hover:bg-gray-200 transition-all"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <User className="w-5 h-5" />
+                        <span className="text-xs">Hồ sơ của tôi</span>
+                      </Link>
+                      <button
+                        onClick={() => {
+                          signOut();
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className="flex flex-col items-center justify-center gap-1 py-3 bg-red-50 text-red-600 rounded-xl font-bold hover:bg-red-100 transition-all"
+                      >
+                        <X className="w-5 h-5" />
+                        <span className="text-xs">Đăng xuất</span>
+                      </button>
+                    </>
                   ) : (
                     <Link
                       href="/login"
