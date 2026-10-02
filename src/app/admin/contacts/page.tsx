@@ -176,7 +176,7 @@ export default function AdminContactsPage() {
                                     <p className="text-sm font-semibold text-gray-700 mb-2">Nội dung:</p>
                                     <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-wrap">{selected.message}</p>
                                 </div>
-                                <a href={`mailto:${selected.email}?subject=Phản hồi từ KemXinh`}
+                                <a href={`mailto:${selected.email}?subject=Phản hồi từ V-LIGHT`}
                                     className="inline-flex items-center gap-2 mt-2 px-4 py-2 bg-red-500 text-white text-sm font-bold rounded-xl hover:bg-red-700 transition-colors">
                                     <Mail className="w-4 h-4" />
                                     Trả lời qua email

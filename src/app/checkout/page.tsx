@@ -223,7 +223,7 @@ export default function CheckoutPage() {
                     paymentWindow.document.close();
                     paymentWindow.focus();
                 }
-                showToast("Đặt hàng thành công! KemXinh sẽ liên hệ bạn sớm nhé.", "success");
+                showToast("Đặt hàng thành công! V-LIGHT sẽ liên hệ bạn sớm nhé.", "success");
             } else {
                 if (paymentWindow && !paymentWindow.closed) paymentWindow.close();
                 showToast("Có lỗi khi tạo đơn hàng. Vui lòng thử lại.", "error");
@@ -251,7 +251,7 @@ export default function CheckoutPage() {
                 </div>
                 <h2 className="text-3xl font-bold text-gray-900 mb-2">Đặt hàng thành công!</h2>
                 <p className="text-gray-500 mb-4 max-w-md">
-                    Cảm ơn bạn đã tin tưởng KemXinh. Đơn hàng đang được xử lý.
+                    Cảm ơn bạn đã tin tưởng V-LIGHT. Đơn hàng đang được xử lý.
                 </p>
 
                 {/* Order ID */}

@@ -18,7 +18,7 @@ export default function Hero() {
             src="/images/banner.jpg"
             alt="Hoa trang trí cho không gian sống"
             fill
-            className="object-cover object-center"
+            className="object-cover object-[80%_center] md:object-[65%_center]"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/20 to-white" />
@@ -40,7 +40,7 @@ export default function Hero() {
             className="inline-block mb-8"
           >
             <span className="text-xs tracking-[0.3em] uppercase text-red-500 font-bold bg-red-100 px-3 py-1.5 rounded-full">
-              Làm mới không gian sống
+              Ánh sáng từ nhung
             </span>
           </motion.div>
 
@@ -49,7 +49,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 tracking-tight"
+            className="text-4xl md:text-7xl font-bold text-gray-900 mb-6 tracking-tight"
             style={{ lineHeight: 1.1 }}
           >
             Điểm tô

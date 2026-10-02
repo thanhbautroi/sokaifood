@@ -25,8 +25,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "KemXinh | Đèn học, hoa và đồ trang trí",
-    template: "%s | KemXinh",
+    default: "V-LIGHT | Đèn học, hoa và đồ trang trí",
+    template: "%s | V-LIGHT",
   },
   description:
     "Khám phá đèn học, hoa trang trí, đồ decor và những món đồ tiện ích giúp không gian sống thêm đẹp, tiện nghi và mang dấu ấn riêng.",
@@ -40,17 +40,17 @@ export const metadata: Metadata = {
     "trang trí nhà cửa",
     "đồ dùng tiện ích",
   ],
-  authors: [{ name: "KemXinh" }],
+  authors: [{ name: "V-LIGHT" }],
   icons: {
-    icon: "/kemxinh-mark.svg",
-    apple: "/kemxinh-mark.svg",
+    icon: "/images/v-light-logo.png",
+    apple: "/images/v-light-logo.png",
   },
   openGraph: {
     type: "website",
     locale: "vi_VN",
-    title: "KemXinh | Đèn học, hoa và đồ trang trí",
-    description: "Khám phá các món đồ tiện dụng và trang trí cho góc học tập, bàn làm việc và ngôi nhà tại KemXinh.",
-    siteName: "KemXinh",
+    title: "V-LIGHT | Đèn học, hoa và đồ trang trí",
+    description: "Khám phá các món đồ tiện dụng và trang trí cho góc học tập, bàn làm việc và ngôi nhà tại V-LIGHT.",
+    siteName: "V-LIGHT",
   },
 };
 

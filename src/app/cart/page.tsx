@@ -21,7 +21,7 @@ export default function CartPage() {
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">Giỏ hàng của bạn đang trống</h2>
                 <p className="text-gray-500 mb-8 max-w-sm">
-                    Bạn chưa thêm sản phẩm nào vào giỏ. Khám phá đèn học, hoa và đồ trang trí tại KemXinh nhé!
+                    Bạn chưa thêm sản phẩm nào vào giỏ. Khám phá đèn học, hoa và đồ trang trí tại V-LIGHT nhé!
                 </p>
                 <Link
                     href="/"

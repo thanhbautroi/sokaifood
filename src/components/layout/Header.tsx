@@ -48,7 +48,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 py-3">
+    <header className="fixed top-0 left-0 right-0 z-50 py-2 md:py-3">
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -63,7 +63,7 @@ export default function Header() {
 
       <div className="container mx-auto px-4 max-w-7xl relative">
         <div className={cn(
-          "relative flex items-center justify-between px-6 h-20 rounded-full transition-all duration-500",
+          "relative flex items-center justify-between px-4 md:px-6 h-14 md:h-20 rounded-full transition-all duration-500",
           isScrolled
             ? "border border-amber-200 bg-white/90 backdrop-blur-md shadow-lg"
             : "border border-transparent bg-white/70 backdrop-blur-sm"
@@ -71,16 +71,16 @@ export default function Header() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center cursor-pointer group z-10">
-            <div className="relative w-11 h-11 flex-shrink-0 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center rounded-full bg-blue-100 overflow-hidden">
+            <div className="relative w-9 h-9 md:w-11 md:h-11 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
               <Image
-                src="/kemxinh-mark.svg"
-                alt="KemXinh"
-                width={28}
-                height={28}
+                src="/images/v-light-logo.png"
+                alt="V-LIGHT"
+                fill
+                sizes="(max-width: 768px) 36px, 44px"
                 className="object-contain"
               />
             </div>
-            <span className="ml-2 font-black text-2xl text-red-600 tracking-tight">Kem<span className="text-gray-700">Xinh</span></span>
+            <span className="ml-2 font-black text-xl md:text-2xl text-[#123b25] tracking-tight">V-LIGHT</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -159,7 +159,7 @@ export default function Header() {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label={isMobileMenuOpen ? "Đóng menu" : "Mở menu"}
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? <X className="w-5 h-5 md:w-6 md:h-6" /> : <Menu className="w-5 h-5 md:w-6 md:h-6" />}
           </button>
         </div>
 

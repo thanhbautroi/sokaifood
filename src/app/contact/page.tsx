@@ -55,11 +55,11 @@ export default function ContactPage() {
                     {/* Contact Info */}
                     <div className="lg:col-span-2 space-y-4">
                         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                            <div className="relative w-24 h-24 flex items-center justify-center rounded-full bg-blue-100 overflow-hidden mb-6">
-                            <Image src="/kemxinh-mark.svg" alt="KemXinh" fill className="object-contain" />
+                            <div className="relative w-24 h-24 mb-6">
+                            <Image src="/images/v-light-logo.png" alt="V-LIGHT" fill sizes="96px" className="object-contain" />
                         </div>
                             <p className="text-gray-500 text-sm leading-relaxed mb-6">
-                                KemXinh — lựa chọn đèn học, hoa và đồ trang trí cho góc học tập, bàn làm việc và ngôi nhà của bạn.
+                                V-LIGHT — lựa chọn đèn học, hoa và đồ trang trí cho góc học tập, bàn làm việc và ngôi nhà của bạn.
                             </p>
                             <div className="space-y-4">
                                 {[

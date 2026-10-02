@@ -52,11 +52,12 @@ export default function RegisterPage() {
         <div className="min-h-screen bg-red-50/50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 pt-24">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="flex justify-center">
-                    <div className="relative w-20 h-20 flex items-center justify-center rounded-full bg-blue-100 overflow-hidden">
+                    <div className="relative w-20 h-20">
                         <Image
-                            src="/kemxinh-mark.svg"
-                            alt="KemXinh"
+                            src="/images/v-light-logo.png"
+                            alt="V-LIGHT"
                             fill
+                            sizes="80px"
                             className="object-contain"
                         />
                     </div>

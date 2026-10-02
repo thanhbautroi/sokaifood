@@ -48,18 +48,18 @@ export default function LoginPage() {
         <div className="min-h-screen bg-red-50/50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 pt-24">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="flex justify-center">
-                    <div className="w-20 h-20 flex items-center justify-center rounded-full bg-blue-100">
+                    <div className="relative w-20 h-20">
                         <Image
-                            src="/kemxinh-mark.svg"
-                            alt="KemXinh"
-                            width={44}
-                            height={44}
+                            src="/images/v-light-logo.png"
+                            alt="V-LIGHT"
+                            fill
+                            sizes="80px"
                             className="object-contain"
                         />
                     </div>
                 </div>
                 <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-                    Đăng nhập KemXinh
+                    Đăng nhập V-LIGHT
                 </h2>
                 <p className="mt-2 text-center text-sm text-gray-600">
                     Chưa có tài khoản?{" "}

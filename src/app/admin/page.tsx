@@ -114,12 +114,12 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
+      <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Tổng quan Hệ thống</h1>
           <p className="text-sm text-gray-500 mt-1">Cập nhật theo thời gian thực</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-2 sm:gap-3">
           <button onClick={fetchStats} disabled={refreshing}
             className="flex items-center gap-2 px-4 py-2 text-sm border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors disabled:opacity-50">
             <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`} />
@@ -175,26 +175,26 @@ export default function AdminDashboard() {
       )}
 
       {/* Stat Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="mb-6 grid grid-cols-2 gap-3 sm:mb-8 sm:gap-4 lg:grid-cols-4">
         {[
           { label: "Doanh thu", value: `${(stats?.totalRevenue ?? 0).toLocaleString("vi-VN")}đ`, icon: TrendingUp, color: "text-green-600", bg: "bg-green-50" },
           { label: "Tổng đơn hàng", value: stats?.totalOrders ?? 0, icon: ShoppingCart, color: "text-blue-600", bg: "bg-blue-50" },
           { label: "Chờ xử lý", value: stats?.pendingOrders ?? 0, icon: Clock, color: "text-red-700", bg: "bg-red-50" },
           { label: "Khách hàng", value: stats?.totalUsers ?? 0, icon: Users, color: "text-purple-600", bg: "bg-purple-50" },
         ].map(({ label, value, icon: Icon, color, bg }) => (
-          <div key={label} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-            <div className={`w-10 h-10 ${bg} rounded-xl flex items-center justify-center mb-3`}>
+          <div key={label} className="min-w-0 bg-white rounded-2xl border border-gray-100 shadow-sm p-3 sm:p-5">
+            <div className={`w-9 h-9 sm:w-10 sm:h-10 ${bg} rounded-xl flex items-center justify-center mb-3`}>
               <Icon className={`w-5 h-5 ${color}`} />
             </div>
             <p className="text-xs text-gray-500 mb-1">{label}</p>
-            <p className="text-2xl font-bold text-gray-900">{value}</p>
+            <p className="wrap-break-word text-lg font-bold leading-tight text-gray-900 sm:text-2xl">{value}</p>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         {/* Revenue Chart */}
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-6">
           <h3 className="font-bold text-gray-900 mb-6">Doanh thu 7 ngày gần nhất</h3>
           <div className="flex items-end gap-2 h-40">
             {stats?.revenueByDay.map((day, i) => (
@@ -214,7 +214,7 @@ export default function AdminDashboard() {
               </div>
             ))}
           </div>
-          <div className="mt-4 pt-4 border-t border-gray-100 flex gap-6 text-sm text-gray-600">
+          <div className="mt-4 flex flex-wrap gap-3 border-t border-gray-100 pt-4 text-sm text-gray-600 sm:gap-6">
             <div>Tổng 7 ngày: <strong className="text-gray-900">{(stats?.revenueByDay.reduce((s, d) => s + d.revenue, 0) ?? 0).toLocaleString("vi-VN")}đ</strong></div>
             <div>Đơn: <strong className="text-gray-900">{stats?.revenueByDay.reduce((s, d) => s + d.orders, 0) ?? 0}</strong></div>
           </div>
@@ -270,7 +270,8 @@ export default function AdminDashboard() {
             <p>Chưa có đơn hàng nào</p>
           </div>
         ) : (
-          <table className="w-full">
+          <div className="w-full overflow-x-auto">
+          <table className="w-full min-w-160">
             <thead className="bg-gray-50 border-b border-gray-100">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Mã đơn</th>
@@ -299,6 +300,7 @@ export default function AdminDashboard() {
               })}
             </tbody>
           </table>
+          </div>
         )}
       </div>
     </div>

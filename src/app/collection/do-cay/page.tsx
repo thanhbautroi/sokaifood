@@ -8,7 +8,7 @@ import Product from "@/models/Product";
 
 export const metadata: Metadata = {
   title: "Đèn học",
-  description: "Khám phá các mẫu đèn học tiện dụng cho góc học tập và bàn làm việc tại KemXinh.",
+  description: "Khám phá các mẫu đèn học tiện dụng cho góc học tập và bàn làm việc tại V-LIGHT.",
 };
 
 export const dynamic = "force-dynamic";

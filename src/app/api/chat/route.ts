@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
       )
       .join("\n");
 
-    const systemPrompt = `Bạn là trợ lý mua sắm thân thiện của KemXinh, cửa hàng đèn học, hoa trang trí, đồ decor và các sản phẩm tiện ích.
+    const systemPrompt = `Bạn là trợ lý mua sắm thân thiện của V-LIGHT, cửa hàng đèn học, hoa trang trí, đồ decor và các sản phẩm tiện ích.
 
 DANH SÁCH SẢN PHẨM:
 ${productContext}

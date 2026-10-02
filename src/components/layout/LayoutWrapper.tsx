@@ -3,7 +3,6 @@
 import { usePathname } from "next/navigation";
 import Header from "./Header";
 import Footer from "./Footer";
-import ChatBot from "../chat/ChatBot";
 
 export default function LayoutWrapper({
   children,
@@ -22,7 +21,6 @@ export default function LayoutWrapper({
       <Header />
       <main className="min-h-screen">{children}</main>
       <Footer />
-      <ChatBot />
     </>
   );
 }

@@ -8,7 +8,7 @@ import Product from "@/models/Product";
 
 export const metadata: Metadata = {
     title: "Sản phẩm khác",
-    description: "Khám phá thêm các món đồ tiện ích và quà tặng được tuyển chọn tại KemXinh.",
+    description: "Khám phá thêm các món đồ tiện ích và quà tặng được tuyển chọn tại V-LIGHT.",
 };
 
 export const dynamic = "force-dynamic";
