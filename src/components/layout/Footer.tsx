@@ -112,7 +112,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
             <p>© {new Date().getFullYear()} V-LIGHT. Mua sắm tiện ích cho không gian sống.</p>
             <p className="text-gray-500">
-              Đồ án thực hiện bởi nhóm 5, lớp UDPM23-02
+              make by ThanhBauTroi
             </p>
           </div>
         </div>
