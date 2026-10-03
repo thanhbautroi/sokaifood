@@ -135,7 +135,7 @@ export default function AdminProductsPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      <div className="hidden lg:block bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center py-16 text-gray-400">
             <Package className="w-8 h-8 animate-pulse" />
@@ -177,10 +177,10 @@ export default function AdminProductsPage() {
                     )}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-900">
-                    {product.quantity ?? 0}
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-600">
                     {COLLECTION_LABELS[product.collectionType] || product.collectionType}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-900">
+                    {product.quantity ?? 0}
                   </td>
                   <td className="px-6 py-4">
                     <span className={`inline-flex px-2.5 py-1 text-xs font-semibold rounded-full ${product.inStock ? "bg-green-100 text-green-700" : "bg-red-100 text-red-600"}`}>
@@ -209,6 +209,63 @@ export default function AdminProductsPage() {
             <Package className="w-10 h-10 mx-auto mb-3 opacity-40" />
             <p>Không tìm thấy sản phẩm</p>
           </div>
+        )}
+      </div>
+
+      <div className="space-y-3 lg:hidden">
+        {loading ? (
+          <div className="flex items-center justify-center rounded-2xl border border-gray-100 bg-white py-16 text-gray-400">
+            <Package className="w-8 h-8 animate-pulse" />
+          </div>
+        ) : filtered.length === 0 ? (
+          <div className="rounded-2xl border border-gray-100 bg-white py-12 text-center text-gray-400">
+            <Package className="mx-auto mb-3 h-10 w-10 opacity-40" />
+            <p>Không tìm thấy sản phẩm</p>
+          </div>
+        ) : (
+          filtered.map((product) => (
+            <article key={product._id} className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+              <div className="flex min-w-0 items-start gap-3">
+                <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-gray-100">
+                  {product.images?.[0] ? (
+                    <Image src={product.images[0]} alt={product.name} fill className="object-cover" />
+                  ) : (
+                    <Package className="absolute inset-0 m-auto h-6 w-6 text-gray-300" />
+                  )}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h2 className="break-words text-sm font-semibold text-gray-900">{product.name}</h2>
+                  <p className="mt-0.5 break-all text-xs text-gray-400">{product.slug}</p>
+                  <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+                    <span className="font-semibold text-gray-900">{product.price.toLocaleString("vi-VN")}đ</span>
+                    <span className="text-gray-500">{COLLECTION_LABELS[product.collectionType] || product.collectionType}</span>
+                    <span className="text-gray-500">SL: {product.quantity ?? 0}</span>
+                  </div>
+                  <span className={`mt-2 inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${product.inStock ? "bg-green-100 text-green-700" : "bg-red-100 text-red-600"}`}>
+                    {product.inStock ? "Còn hàng" : "Hết hàng"}
+                  </span>
+                </div>
+              </div>
+              <div className="mt-3 flex gap-2 border-t border-gray-100 pt-3">
+                <Link
+                  href={`/admin/products/${product._id}`}
+                  aria-label={`Sửa ${product.name}`}
+                  className="flex min-h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-blue-50 px-3 text-sm font-semibold text-blue-700 transition-colors hover:bg-blue-100"
+                >
+                  <Edit className="h-4 w-4" />
+                  Sửa
+                </Link>
+                <button
+                  onClick={() => setDeleteTarget(product)}
+                  aria-label={`Xóa ${product.name}`}
+                  className="flex min-h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-red-50 px-3 text-sm font-semibold text-red-600 transition-colors hover:bg-red-100"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  Xóa
+                </button>
+              </div>
+            </article>
+          ))
         )}
       </div>
     </div>

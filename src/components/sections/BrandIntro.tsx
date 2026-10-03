@@ -21,7 +21,7 @@ export default function BrandIntro() {
           >
             <div className="relative w-[90%] mx-auto aspect-square lg:w-auto lg:ml-12 lg:aspect-3/4 rounded-2xl overflow-hidden shadow-2xl">
               <Image
-                src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&q=85&w=1200"
+                src="/images/anhtb.jpg"
                 alt="Hoa trang trí cho không gian sống"
                 fill
                 className="object-cover"

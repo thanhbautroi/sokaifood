@@ -15,7 +15,7 @@ export default function Hero() {
       <div className="absolute right-0 top-0 w-[55%] h-full">
         <div className="relative w-full h-full">
           <Image
-            src="/images/banner.jpg"
+            src="/images/anhtb.jpg"
             alt="Hoa trang trí cho không gian sống"
             fill
             className="object-cover object-[80%_center] md:object-[65%_center]"
